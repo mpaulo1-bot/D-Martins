@@ -1,0 +1,28 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+
+# Previews locais
+preview-*.png
+assets/hero-dmartins.png
+
+# Dependencias e builds comuns
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+coverage/
+
+# Variaveis de ambiente
+.env
+.env.*
+!.env.example
