@@ -13,6 +13,10 @@ if (navToggle) {
   navToggle.addEventListener("click", () => {
     const isOpen = body.classList.toggle("menu-open");
     navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Fechar menu" : "Abrir menu",
+    );
   });
 }
 
@@ -20,7 +24,17 @@ document.querySelectorAll(".site-nav a").forEach((link) => {
   link.addEventListener("click", () => {
     body.classList.remove("menu-open");
     navToggle?.setAttribute("aria-expanded", "false");
+    navToggle?.setAttribute("aria-label", "Abrir menu");
   });
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || !body.classList.contains("menu-open")) return;
+
+  body.classList.remove("menu-open");
+  navToggle?.setAttribute("aria-expanded", "false");
+  navToggle?.setAttribute("aria-label", "Abrir menu");
+  navToggle?.focus();
 });
 
 function buildWhatsAppMessage() {
@@ -35,7 +49,7 @@ function buildWhatsAppMessage() {
 
   const message = [
     "Olá! Vi o site da D'Martins Construções e quero um orçamento.",
-    services ? `Servico: ${services}` : "",
+    services ? `Serviço: ${services}` : "",
     etapa ? `Etapa da obra: ${etapa}` : "",
     medida ? `Quantidade ou medida: ${medida}` : "",
     local ? `Bairro ou cidade: ${local}` : "",

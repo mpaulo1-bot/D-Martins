@@ -28,51 +28,295 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "HomeAndConstructionBusiness",
-        "name": "D'Martins Construções",
-        "telephone": "+55 27 98862-4528",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Serra",
-          "addressRegion": "ES",
-          "addressCountry": "BR"
-        },
-        "areaServed": [
-          "Serra",
-          "Grande Vitória",
-          "Vitória",
-          "Vila Velha",
-          "Cariacica"
-        ],
-        "makesOffer": [
+        "@graph": [
           {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Reformas residenciais e comerciais"
+            "@type": "HomeAndConstructionBusiness",
+            "@id": "https://construtoradmartins.com.br/#empresa",
+            "name": "D'Martins Construções",
+            "url": "https://construtoradmartins.com.br/",
+            "telephone": "+5527988624528",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Serra",
+              "addressRegion": "ES",
+              "addressCountry": "BR"
+            },
+            "areaServed": [
+              {
+                "@type": "City",
+                "name": "Serra",
+                "containedInPlace": {
+                  "@type": "State",
+                  "name": "Espírito Santo"
+                }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Grande Vitória"
+              },
+              {
+                "@type": "City",
+                "name": "Vitória",
+                "containedInPlace": {
+                  "@type": "State",
+                  "name": "Espírito Santo"
+                }
+              },
+              {
+                "@type": "City",
+                "name": "Vila Velha",
+                "containedInPlace": {
+                  "@type": "State",
+                  "name": "Espírito Santo"
+                }
+              },
+              {
+                "@type": "City",
+                "name": "Cariacica",
+                "containedInPlace": {
+                  "@type": "State",
+                  "name": "Espírito Santo"
+                }
+              }
+            ],
+            "makesOffer": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Reformas residenciais e comerciais",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Construções",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Obras públicas",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Projetos de arquitetura",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Projetos complementares",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Execução de fundações",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Reforma de banheiro",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Reforma de cozinha",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Pintura residencial e comercial",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Instalação elétrica",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Instalação de revestimentos",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Execução de reboco",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Estruturas metálicas",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Reforma de telhado",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Reforma de apartamento",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Reforma de casa",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Muro de arrimo com bloco estrutural",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Muro de arrimo com bloco de concreto",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Impermeabilização de lajes",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Instalação de drywall",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Instalação de gesso",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://construtoradmartins.com.br/#website",
+            "url": "https://construtoradmartins.com.br/",
+            "name": "D'Martins Construções",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://construtoradmartins.com.br/#empresa"
             }
           },
           {
-            "@type": "Offer",
-            "itemOffered": { "@type": "Service", "name": "Construções" }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": { "@type": "Service", "name": "Obras públicas" }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Projetos de arquitetura"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Projetos complementares"
-            }
+            "@type": "WebPage",
+            "@id": "https://construtoradmartins.com.br/#webpage",
+            "url": "https://construtoradmartins.com.br/",
+            "name": "D'Martins Construções",
+            "isPartOf": {
+              "@id": "https://construtoradmartins.com.br/#website"
+            },
+            "about": {
+              "@id": "https://construtoradmartins.com.br/#empresa"
+            },
+            "mainEntity": {
+              "@id": "https://construtoradmartins.com.br/#empresa"
+            },
+            "inLanguage": "pt-BR"
           }
         ]
       }
@@ -87,6 +331,7 @@
       <button
         class="nav-toggle"
         type="button"
+        aria-label="Abrir menu"
         aria-expanded="false"
         aria-controls="menu"
       >
@@ -110,7 +355,7 @@
     </header>
 
     <main id="topo">
-      <section class="hero" aria-label="Apresentacao">
+      <section class="hero" aria-label="Apresentação">
         <img
           class="hero-image"
           src="assets/obras/obra-fundacao.jpg"
@@ -168,7 +413,7 @@
                 Reforma</label
               >
               <label
-                ><input type="checkbox" value="Construcao" /> Construcao</label
+                ><input type="checkbox" value="Construção" /> Construção</label
               >
               <label
                 ><input type="checkbox" value="Obra pública" /> Obra
@@ -341,10 +586,10 @@
           <figure>
             <img
               src="assets/obras/calcada-intertravada.jpg"
-              alt="Calcada de blocos intertravados em fase de acabamento"
+              alt="Calçada de blocos intertravados em fase de acabamento"
               loading="lazy"
             />
-            <figcaption>Calcada intertravada</figcaption>
+            <figcaption>Calçada intertravada</figcaption>
           </figure>
           <figure>
             <img
@@ -368,7 +613,7 @@
               alt="Detalhe de serviço de construção"
               loading="lazy"
             />
-            <figcaption>Detalhe de construcao</figcaption>
+            <figcaption>Detalhe de construção</figcaption>
           </figure>
           <figure>
             <img
@@ -410,7 +655,7 @@
               >
             </li>
             <li>
-              <strong>Analise do escopo</strong>
+              <strong>Análise do escopo</strong>
               <span
                 >A equipe identifica se o caminho ideal é projeto, reforma
                 pontual ou execução completa.</span
@@ -424,7 +669,7 @@
               >
             </li>
             <li>
-              <strong>Execucao acompanhada</strong>
+              <strong>Execução acompanhada</strong>
               <span
                 >A obra segue com olhar técnico, controle de qualidade e
                 comunicação direta.</span
@@ -538,7 +783,7 @@
       <span>© <span data-year>2026</span></span>
     </footer>
 
-    <div class="mobile-bar" aria-label="Contato rapido">
+    <div class="mobile-bar" aria-label="Contato rápido">
       <a href="tel:+5527988624528">Ligar</a>
       <a
         href="https://wa.me/5527988624528?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20D%20Martins%20Constru%C3%A7%C3%B5es%20e%20quero%20um%20or%C3%A7amento."

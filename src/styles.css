@@ -46,6 +46,11 @@ a {
   text-decoration: none;
 }
 
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}
+
 h1,
 h2,
 h3,
@@ -818,5 +823,15 @@ details p {
 
   .mobile-bar a:last-child {
     background: #1f9d5a;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .button {
+    transition: none;
   }
 }
