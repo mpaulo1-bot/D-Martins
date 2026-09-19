@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/andrey.simoes@hotmail.com/public_html
+    - export DEPLOYPATH=/home/mc360c21/public_html
     - /bin/cp -R * $DEPLOYPATH
