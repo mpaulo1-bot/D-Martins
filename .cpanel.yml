@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/mc360c21/public_html
+    - export DEPLOYPATH=/home/mc360c21/construtoradmartins.com.br
     - /bin/cp -R * $DEPLOYPATH
