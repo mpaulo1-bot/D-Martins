@@ -26,3 +26,7 @@ coverage/
 .env
 .env.*
 !.env.example
+
+# Chaves locais
+id_rsa
+id_rsa.pub

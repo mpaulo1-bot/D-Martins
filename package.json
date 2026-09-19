@@ -1,0 +1,10 @@
+{
+  "name": "dmartins-construcoes-site",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/generate-sitemap.mjs && node scripts/validate-seo.mjs",
+    "preview": "node scripts/serve-static.mjs",
+    "test": "node scripts/validate-seo.mjs",
+    "check:seo": "node scripts/validate-seo.mjs"
+  }
+}

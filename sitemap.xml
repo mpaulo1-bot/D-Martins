@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
+  <url>
+    <loc>https://construtoradmartins.com.br/</loc>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/obras/detalhe-construcao.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/obras/ambiente-interno.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/obras/parede-sao-tome.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/obras/calcada-intertravada.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/obras/muro-pedras.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/obras/obra-andamento.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/obras/obra-fundacao.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/obras/frente-obra.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/obras/servico-executado.webp</image:loc>
+    </image:image>
+  </url>
+</urlset>
