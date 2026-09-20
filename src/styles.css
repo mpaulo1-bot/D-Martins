@@ -58,13 +58,15 @@ a {
 h1,
 h2,
 h3,
+h4,
 p {
   margin: 0;
 }
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   color: var(--ink);
   line-height: 1.08;
   letter-spacing: 0;
@@ -463,12 +465,24 @@ select {
 
 .specialized-services {
   margin-top: clamp(42px, 6vw, 72px);
-  padding-top: clamp(34px, 5vw, 54px);
-  border-top: 1px solid var(--line);
+  padding: clamp(32px, 5vw, 56px);
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.specialized-services .section-head {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.specialized-services .section-head .eyebrow {
+  margin-top: 0;
 }
 
 .specialized-services .section-head h3 {
-  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  margin-top: 12px;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
   text-wrap: balance;
 }
 
@@ -477,16 +491,29 @@ select {
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   margin-top: 28px;
+  counter-reset: specialized-service;
 }
 
 .specialized-grid article {
-  padding: 22px;
+  padding: 24px;
   background: var(--panel);
   border: 1px solid var(--line);
+  border-top: 3px solid var(--brand);
   border-radius: 8px;
+  counter-increment: specialized-service;
 }
 
-.specialized-grid h3 {
+.specialized-grid article::before {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--brand);
+  font-size: 0.8rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  content: counter(specialized-service, decimal-leading-zero);
+}
+
+.specialized-grid h4 {
   font-size: 1.08rem;
 }
 
@@ -494,17 +521,31 @@ select {
   display: grid;
   gap: 8px;
   margin: 16px 0 0;
-  padding-left: 20px;
+  padding: 0;
   color: var(--muted);
+  list-style: none;
 }
 
-.text-link {
-  display: inline-flex;
-  margin-top: 24px;
-  color: var(--brand);
-  font-weight: 800;
-  text-decoration: underline;
-  text-underline-offset: 4px;
+.specialized-grid li {
+  position: relative;
+  padding-left: 16px;
+}
+
+.specialized-grid li::before {
+  position: absolute;
+  top: 0.68em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background: var(--brand);
+  border-radius: 50%;
+  content: "";
+}
+
+.specialized-cta {
+  display: flex;
+  width: fit-content;
+  margin: clamp(24px, 3vw, 32px) auto 0;
 }
 
 .works {
@@ -822,6 +863,14 @@ details p {
 @media (max-width: 620px) {
   .container {
     width: min(100% - 28px, var(--max));
+  }
+
+  .specialized-services {
+    padding: 28px 20px;
+  }
+
+  .specialized-cta {
+    width: 100%;
   }
 
   .brand span:last-child {
