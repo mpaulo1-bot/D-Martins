@@ -5,6 +5,18 @@ import { discoverIndexablePages } from "./site-files.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const productionUrl = "https://construtoradmartins.com.br/";
+const expectedTitle =
+  "Construção, Reformas e Engenharia na Grande Vitória | D'Martins";
+const expectedDescription =
+  "Construção, reformas, projetos, regularização de imóveis, inspeção predial e obras públicas na Grande Vitória. Atendimento com engenheiro civil.";
+const expectedServices = [
+  "Reformas residenciais, comerciais e prediais",
+  "Construções",
+  "Projetos de arquitetura e complementares",
+  "Regularização de obras e imóveis",
+  "Inspeção predial, vistorias e laudos técnicos",
+  "Obras públicas",
+];
 const read = (file) => readFileSync(path.join(root, file), "utf8");
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -16,7 +28,7 @@ const sitemap = read("sitemap.xml");
 const llms = read("llms.txt");
 
 const attribute = (tag, name) =>
-  tag.match(new RegExp(`${name}=["']([^"']+)["']`, "i"))?.[1];
+  tag?.match(new RegExp(`${name}=(["'])(.*?)\\1`, "i"))?.[2];
 const meta = (key, value) => {
   const tags = html.match(/<meta\b[^>]*>/gi) ?? [];
   return tags.find((tag) => attribute(tag, key) === value);
@@ -26,20 +38,39 @@ assert(/<!doctype html>/i.test(html), "DOCTYPE ausente.");
 assert(/<html\b[^>]*lang="pt-BR"/i.test(html), "Idioma pt-BR ausente.");
 assert((html.match(/<h1\b/gi) ?? []).length === 1, "A página deve ter um H1.");
 assert(
-  html.includes(
-    "<title>D'Martins Construções | Construção e Reformas na Grande Vitória</title>",
-  ),
+  html.includes(`<title>${expectedTitle}</title>`),
   "Title esperado não encontrado.",
 );
 
 const canonicalTag = html.match(/<link\b[^>]*rel="canonical"[^>]*>/i)?.[0];
 assert(canonicalTag, "Canonical ausente.");
 assert(attribute(canonicalTag, "href") === productionUrl, "Canonical incorreta.");
-assert(meta("name", "description"), "Meta description ausente.");
+assert(
+  attribute(meta("name", "description"), "content") === expectedDescription,
+  "Meta description divergente.",
+);
 assert(meta("name", "robots"), "Meta robots ausente.");
 assert(meta("property", "og:url"), "og:url ausente.");
 assert(meta("property", "og:image"), "og:image ausente.");
 assert(meta("name", "twitter:card"), "Twitter Card ausente.");
+for (const [key, value] of [
+  ["og:title", expectedTitle],
+  ["og:description", expectedDescription],
+]) {
+  assert(
+    attribute(meta("property", key), "content") === value,
+    `${key} divergente.`,
+  );
+}
+for (const [key, value] of [
+  ["twitter:title", expectedTitle],
+  ["twitter:description", expectedDescription],
+]) {
+  assert(
+    attribute(meta("name", key), "content") === value,
+    `${key} divergente.`,
+  );
+}
 
 for (const tag of html.match(/<img\b[^>]*>/gi) ?? []) {
   const src = attribute(tag, "src");
@@ -51,6 +82,10 @@ for (const tag of html.match(/<img\b[^>]*>/gi) ?? []) {
   }
   if (src && !/^https?:/.test(src)) {
     assert(existsSync(path.join(root, src)), `Imagem local inexistente: ${src}.`);
+    assert(
+      /^[a-z0-9./-]+$/.test(src),
+      `Nome de imagem não normalizado: ${src}.`,
+    );
   }
 }
 
@@ -63,14 +98,36 @@ const graph = schema["@graph"];
 assert(Array.isArray(graph), "JSON-LD deve usar @graph.");
 const ids = graph.map((entity) => entity["@id"]).filter(Boolean);
 assert(new Set(ids).size === ids.length, "Há @ids duplicados no JSON-LD.");
-for (const id of ["#empresa", "#website", "#webpage"]) {
+for (const id of [
+  "#empresa",
+  "#wellington-carlos-correa",
+  "#website",
+  "#webpage",
+]) {
   assert(ids.includes(`${productionUrl}${id}`), `Entidade ${id} ausente.`);
 }
 
 const business = graph.find((entity) => entity["@id"] === `${productionUrl}#empresa`);
 assert(business, "Entidade da empresa ausente.");
 assert(business.address?.["@type"] === "PostalAddress", "PostalAddress ausente.");
-assert(business.makesOffer?.length === 21, "Esperados 21 serviços no schema.");
+const offerNames = business.makesOffer?.map((offer) => offer.itemOffered?.name);
+assert(
+  JSON.stringify(offerNames) === JSON.stringify(expectedServices),
+  "Serviços do schema divergem da taxonomia canônica.",
+);
+const servicesSection = html.match(
+  /<section id="servicos"[\s\S]*?<section id="obras"/i,
+)?.[0];
+assert(servicesSection, "Seção de serviços ausente.");
+const visibleServiceNames = [
+  ...servicesSection.matchAll(
+    /<article class="service-card">[\s\S]*?<h3>([^<]+)<\/h3>/gi,
+  ),
+].map((match) => match[1].trim());
+assert(
+  JSON.stringify(visibleServiceNames) === JSON.stringify(expectedServices),
+  "Cards visíveis divergem da ordem canônica dos serviços.",
+);
 
 const htmlWithoutScripts = html.replace(/<script\b[\s\S]*?<\/script>/gi, "");
 for (const offer of business.makesOffer) {
@@ -89,6 +146,53 @@ for (const offer of business.makesOffer) {
     `Serviço do schema não está visível: ${service.name}.`,
   );
 }
+
+const professional = graph.find(
+  (entity) => entity["@id"] === `${productionUrl}#wellington-carlos-correa`,
+);
+assert(professional?.["@type"] === "Person", "Responsável técnico ausente.");
+assert(professional.name === "Wellington Carlos Corrêa", "Nome profissional divergente.");
+assert(professional.jobTitle === "Engenheiro civil", "Profissão divergente.");
+assert(
+  professional.hasCredential?.identifier === "CREA-ES 50219/D",
+  "Registro CREA divergente.",
+);
+assert(
+  business.employee?.["@id"] === professional["@id"] &&
+    professional.worksFor?.["@id"] === business["@id"],
+  "Vínculo entre empresa e responsável técnico divergente.",
+);
+
+const worksSection = html.match(/<section id="obras"[\s\S]*?<\/section>/i)?.[0];
+assert(worksSection, "Seção de obras ausente.");
+const galleryImages = [
+  ...worksSection.matchAll(/<img\b[^>]*src=["']([^"']+)["'][^>]*>/gi),
+].map((match) => new URL(match[1], productionUrl).href);
+const galleryCaptions = [
+  ...worksSection.matchAll(/<figcaption>([\s\S]*?)<\/figcaption>/gi),
+].map((match) => match[1].replace(/\s+/g, " ").trim());
+const schemaImages = business.image ?? [];
+assert(schemaImages.length === 12, "Esperadas 12 obras no schema.");
+assert(
+  JSON.stringify(schemaImages.map((image) => image.contentUrl)) ===
+    JSON.stringify(galleryImages),
+  "Imagens do schema divergem da galeria.",
+);
+assert(
+  JSON.stringify(schemaImages.map((image) => image.caption)) ===
+    JSON.stringify(galleryCaptions),
+  "Legendas do schema divergem da galeria.",
+);
+for (const image of schemaImages) {
+  assert(image["@type"] === "ImageObject", "Obra sem ImageObject.");
+  const localPath = new URL(image.contentUrl).pathname.slice(1);
+  assert(existsSync(path.join(root, localPath)), `Imagem do schema ausente: ${localPath}.`);
+}
+
+const webpage = graph.find(
+  (entity) => entity["@id"] === `${productionUrl}#webpage`,
+);
+assert(webpage?.description === expectedDescription, "Descrição da WebPage divergente.");
 
 const sitemapLocs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
   (match) => match[1],
@@ -109,6 +213,36 @@ for (const imageUrl of sitemap.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)) {
   const localPath = new URL(imageUrl[1]).pathname.slice(1);
   assert(existsSync(path.join(root, localPath)), `Imagem do sitemap ausente: ${localPath}.`);
 }
+const expectedSitemapImages = [
+  ...new Set(
+    [...html.matchAll(/<img\b[^>]*src=["']([^"']+)["'][^>]*>/gi)]
+      .map((match) => new URL(match[1], productionUrl))
+      .filter((url) => url.origin === new URL(productionUrl).origin)
+      .map((url) => url.href),
+  ),
+];
+assert(expectedSitemapImages.length === 14, "Esperadas 14 imagens visíveis.");
+const sitemapImages = [
+  ...sitemap.matchAll(/<image:loc>([^<]+)<\/image:loc>/g),
+].map((match) => match[1]);
+assert(sitemapImages.length === 14, "Esperadas 14 imagens no sitemap.");
+assert(
+  JSON.stringify(sitemapImages) === JSON.stringify(expectedSitemapImages),
+  "Imagens do sitemap divergem das imagens visíveis.",
+);
+const sitemapImageBlocks = [
+  ...sitemap.matchAll(/<image:image>([\s\S]*?)<\/image:image>/g),
+];
+assert(sitemapImageBlocks.length === 14, "Esperados 14 blocos image:image.");
+for (const block of sitemapImageBlocks) {
+  const childTags = [...block[1].matchAll(/<image:([a-z_]+)>/g)].map(
+    (match) => match[1],
+  );
+  assert(
+    JSON.stringify(childTags) === JSON.stringify(["loc"]),
+    "Cada image:image deve conter somente image:loc.",
+  );
+}
 
 assert(/^User-agent: \*$/m.test(robots), "User-agent global ausente.");
 assert(/^Allow: \/$/m.test(robots), "Produção não está explicitamente liberada.");
@@ -118,6 +252,17 @@ assert(
   "Sitemap ausente no robots.txt.",
 );
 assert(llms.includes(productionUrl), "llms.txt não aponta para a página canônica.");
+let previousServicePosition = -1;
+for (const service of expectedServices) {
+  const position = llms.indexOf(`- ${service}`);
+  assert(position > previousServicePosition, `Serviço ausente ou fora de ordem no llms.txt: ${service}.`);
+  previousServicePosition = position;
+}
+assert(llms.includes("CREA-ES 50219/D"), "CREA ausente no llms.txt.");
+assert(
+  llms.includes("Instagram: perfil recém-criado e ainda sem publicações"),
+  "Situação do Instagram ausente no llms.txt.",
+);
 
 const idsInHtml = new Set(
   [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]),

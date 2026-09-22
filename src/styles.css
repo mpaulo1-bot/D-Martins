@@ -5,8 +5,8 @@
   --paper: #fbfaf7;
   --panel: #ffffff;
   --line: #ddd7cc;
-  --brand: #a64b1b;
-  --brand-dark: #783a19;
+  --brand: #b78d40;
+  --brand-dark: #9c7a3b;
   --green: #245b46;
   --steel: #263846;
   --cream: #f1ece3;
@@ -31,7 +31,12 @@ body {
   margin: 0;
   color: var(--text);
   background: var(--paper);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   font-size: 16px;
   line-height: 1.6;
 }
@@ -181,8 +186,17 @@ select {
 
 .hero-shade {
   background:
-    linear-gradient(90deg, rgba(14, 18, 20, 0.84) 0%, rgba(14, 18, 20, 0.66) 38%, rgba(14, 18, 20, 0.18) 100%),
-    linear-gradient(180deg, rgba(14, 18, 20, 0.1) 0%, rgba(14, 18, 20, 0.78) 100%);
+    linear-gradient(
+      90deg,
+      rgba(14, 18, 20, 0.84) 0%,
+      rgba(14, 18, 20, 0.66) 38%,
+      rgba(14, 18, 20, 0.18) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(14, 18, 20, 0.1) 0%,
+      rgba(14, 18, 20, 0.78) 100%
+    );
 }
 
 .hero-content {
@@ -252,7 +266,10 @@ select {
   border-radius: 8px;
   font-weight: 800;
   line-height: 1.1;
-  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
 }
 
 .button:hover {
@@ -425,7 +442,7 @@ select {
 
 .service-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   margin-top: 36px;
 }
@@ -498,7 +515,7 @@ select {
   padding: 24px;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-top: 3px solid var(--brand);
+  /*border-top: 3px solid var(--brand);*/
   border-radius: 8px;
   counter-increment: specialized-service;
 }
@@ -511,6 +528,7 @@ select {
   font-weight: 850;
   letter-spacing: 0.08em;
   content: counter(specialized-service, decimal-leading-zero);
+  border-radius: 8px;
 }
 
 .specialized-grid h4 {
@@ -692,6 +710,18 @@ select {
   border-radius: 8px;
   box-shadow: 0 12px 32px rgba(23, 23, 23, 0.08);
   font-weight: 700;
+}
+
+.trust-list strong,
+.trust-list span {
+  display: block;
+}
+
+.trust-list span {
+  margin-top: 6px;
+  color: var(--muted);
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .faq {
