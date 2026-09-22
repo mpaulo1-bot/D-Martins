@@ -26,6 +26,7 @@ const html = read("index.html");
 const robots = read("robots.txt");
 const sitemap = read("sitemap.xml");
 const llms = read("llms.txt");
+const favicon = read("favicon.svg");
 
 const attribute = (tag, name) =>
   tag?.match(new RegExp(`${name}=(["'])(.*?)\\1`, "i"))?.[2];
@@ -33,6 +34,30 @@ const meta = (key, value) => {
   const tags = html.match(/<meta\b[^>]*>/gi) ?? [];
   return tags.find((tag) => attribute(tag, key) === value);
 };
+
+const faviconTag = html.match(/<link\b[^>]*rel="icon"[^>]*>/i)?.[0];
+assert(attribute(faviconTag, "href") === "/favicon.svg", "Favicon SVG incorreto.");
+assert(attribute(faviconTag, "type") === "image/svg+xml", "Tipo do favicon incorreto.");
+assert(
+  /<svg\b[^>]*width="64"[^>]*height="64"[^>]*viewBox="0 0 829 829"/i.test(
+    favicon,
+  ),
+  "Favicon deve ter quadro quadrado de 64 px.",
+);
+assert(
+  /<rect\b[^>]*width="829"[^>]*height="829"[^>]*rx="75"[^>]*fill="#B78D40"/i.test(
+    favicon,
+  ),
+  "Fundo dourado do favicon divergente.",
+);
+assert(
+  /<g\b[^>]*fill="#021728"[^>]*transform="translate\(0 42\)"/i.test(
+    favicon,
+  ),
+  "Símbolo azul-marinho do favicon divergente.",
+);
+assert((favicon.match(/<path\b/gi) ?? []).length === 8, "Símbolo do favicon incompleto.");
+assert(!/<(?:image|text|script)\b/i.test(favicon), "Favicon contém elemento não permitido.");
 
 assert(/<!doctype html>/i.test(html), "DOCTYPE ausente.");
 assert(/<html\b[^>]*lang="pt-BR"/i.test(html), "Idioma pt-BR ausente.");
