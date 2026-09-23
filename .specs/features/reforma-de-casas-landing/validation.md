@@ -2,76 +2,66 @@
 
 **Date**: 2026-09-23  
 **Spec**: `.specs/features/reforma-de-casas-landing/spec.md`  
-**Diff range**: `78a0413`  
+**Diff range**: `1dadd3b`  
 **Verifier**: independent verifier (author ≠ verifier)
 
 ## Task Completion
 
-No `tasks.md` exists for this feature; task status could not be independently checked.
+No `tasks.md` exists for this feature; task status is not applicable.
 
 ## Spec-Anchored Acceptance Criteria
 
-The implementation evidence below is present in the landing page, but the current automated gate has no landing-specific assertions. Under evidence-or-zero, criteria without a test assertion are gaps.
-
 | Criterion | Spec-defined outcome | `file:line` + assertion expression | Result |
 | --- | --- | --- | --- |
-| RCF-001: access `/reforma-de-casas/` delivers Brazilian Portuguese HTML with canonical, title and description specific to residential renovations in Grande Vitória | `lang="pt-BR"`; canonical `https://construtoradmartins.com.br/reforma-de-casas/`; specific title and description | Implementation: `reforma-de-casas/index.html:2`, `:6`, `:8`, `:13`. No test assertion targets these values. | ⚠️ GAP |
-| RCF-002: page offers WhatsApp budget calls using `+55 27 98862-4528` and contextual messages | WhatsApp links use `5527988624528` and contextual `text`; budget CTA is present | Implementation: `reforma-de-casas/index.html:108`, `:121`, `:173`. No test assertion targets phone/message links. | ⚠️ GAP |
-| RCF-003: gallery has exactly kitchen and façade comparisons, each Before/After, using four WebPs | Exactly two comparison cards and four named assets | Implementation: `reforma-de-casas/index.html:139-150`; sitemap assets: `sitemap.xml:54-63`. No test assertion targets card count, labels, or the four feature assets. | ⚠️ GAP |
-| RCF-004: every displayed image has alt/width/height; main image prioritized and others lazy | All `img` elements have required dimensions/alt; hero has `fetchpriority="high"`; gallery images have `loading="lazy"` | Implementation: `reforma-de-casas/index.html:114`, `:142-150`. The validator's image checks inspect only root `index.html`, not this landing. | ⚠️ GAP |
-| RCF-005: sitemap contains canonical landing URL and four gallery images without tracking parameters | URL plus four feature image URLs, no tracking query parameters | Implementation: `sitemap.xml:52-63`. Existing validator checks sitemap consistency and tracking globally, but has no exact four-image landing assertion. | ⚠️ GAP |
+| RCF-001: landing em português do Brasil com canonical, title e description específicos | `lang="pt-BR"`; canonical exata; title e description de reforma na Grande Vitória | `scripts/validate-seo.mjs:299-311` — `campaignCanonical === "https://construtoradmartins.com.br/reforma-de-casas/"`, title regex e description regex; implementação `reforma-de-casas/index.html:2,6,8-13` | ✅ PASS |
+| RCF-002: CTAs WhatsApp com telefone `+55 27 98862-4528` e mensagens contextualizadas | ao menos chamadas para o número correto com `text` contextualizado | `scripts/validate-seo.mjs:313-315` — count de URLs `https://wa.me/5527988624528?text=` ≥ 3; implementação `reforma-de-casas/index.html:108,121,173` | ⚠️ GAP: a asserção confirma telefone e presença de `text`, mas não verifica o conteúdo contextual de cada mensagem |
+| RCF-003: exatamente duas comparações, cozinha e fachada, cada uma Antes/Depois, usando quatro WebPs | dois cards nomeados cozinha/fachada e quatro imagens/legendas Before/After | `scripts/validate-seo.mjs:317-325` — apenas presença dos quatro `src`; implementação `reforma-de-casas/index.html:139-150` | ⚠️ GAP: não há asserção para exatamente dois cards, nomes cozinha/fachada ou quatro pares Antes/Depois; mutação do rótulo cozinha sobreviveu ao sensor |
+| RCF-004: cada `img` com `alt`, `width`, `height`; hero prioritária; demais lazy | atributos obrigatórios em todas as imagens, hero `fetchpriority="high"`, quatro imagens secundárias lazy | `scripts/validate-seo.mjs:326-337` — valida `alt/width/height` em cada `img`, prioridade alta e count lazy = 4; implementação `reforma-de-casas/index.html:114,142-150` | ✅ PASS |
+| RCF-005: sitemap com URL canônica e quatro imagens sem tracking | URL da landing e os quatro WebPs presentes, sem parâmetros de rastreamento | `scripts/validate-seo.mjs:231-244,339-345` — sitemap/canonicals consistentes, sem `utm_/fbclid/gclid`, URL e quatro imagens da campanha presentes; `sitemap.xml:52-63` | ✅ PASS |
 
-**Status**: ❌ Gaps present (5/5 criteria lack landing-specific test assertions).
+**Status**: ❌ Gaps presentes (RCF-002 e RCF-003 não têm cobertura específica completa).
 
 ## Gate Check
 
 - **Gate command**: `npm test`
-- **Result**: 1 command passed, 0 failed, 0 skipped (`SEO check aprovado: metadados, schema, sitemap, robots, imagens e links.`)
-- **Test count before feature**: not recorded in repository
-- **Test count after feature**: no test framework/count; one validator command executed
-- **Failures**: none in the real tree
+- **Result**: 1 passed, 0 failed, 0 skipped
+- **Output**: `SEO check aprovado: metadados, schema, sitemap, robots, imagens e links.`
+- **Test count**: não há framework; um comando validador foi executado
+- **Real-tree failures**: nenhum
 
 ## Discrimination Sensor
 
-Sensor ran in temporary detached worktree `dmartins-reforma-verifier-9a27f306bf004fc5adcb91dc5d90ef65`; the real tree was never mutated. Baseline and post-cleanup porcelain both contained only the pre-existing untracked `.specs/STATE.md` and `.tmp-photo-study/`.
+Sensor executado em worktree temporário `E:\tmp-verifier-reforma-20260923`; a árvore real não foi mutada. O `git status --short` antes e depois permaneceu: `?? .specs/STATE.md` e `?? .tmp-photo-study/`.
 
-| Mutation | Scratch target | Description | Result |
-| --- | --- | --- | --- |
-| 1 | `reforma-de-casas/index.html` canonical | Changed landing canonical to the homepage URL | ✅ Killed: `npm test` failed on sitemap/canonical divergence |
-| 2 | `src/reforma-de-casas.css` hero rule | Changed `.campaign-hero` `min-height` from `min(760px, 92vh)` to `0` | ❌ Survived: `npm test` still passed; no landing behavior assertion detects this |
+| Mutation | Scratch target | Result |
+| --- | --- | --- |
+| 1 | `reforma-de-casas/index.html` canonical alterada para a homepage | ✅ Killed — `npm test` falhou em `Sitemap e canonicals indexáveis divergem.` |
+| 2 | Remoção do segundo card de comparação | ✅ Killed — `npm test` falhou em `Esperadas 18 imagens visíveis.` |
+| 3 | Rótulo `Reforma de cozinha` alterado para `Reforma de banheiro`, mantendo imagens | ❌ Survived — `npm test` passou |
 
-**Sensor depth**: lightweight 2-mutation run  
-**Result**: 1/2 killed — FAIL
+**Sensor depth**: lightweight, 3 mutations  
+**Result**: 2/3 killed — ❌ FAIL
 
 ## Code Quality
 
 | Principle | Status |
 | --- | --- |
-| No scope creep / surgical implementation | ✅ (manual inspection of commit `78a0413`) |
-| Matches existing patterns | ✅ |
-| Spec-anchored outcomes asserted by tests | ❌ |
-| Every feature criterion mapped to an automated assertion | ❌ |
-| Documented testing guidelines | ✅ Strong defaults; no feature-specific guideline found |
-
-## Edge Cases
-
-- ✅ Out-of-scope bathroom before/after claim is not present.
-- ✅ Sitemap feature URLs contain no tracking parameters.
-- ⚠️ Landing-specific malformed CTA, image attributes, and gallery-count cases are not automated.
+| Escopo cirúrgico / sem correção de código nesta verificação | ✅ |
+| Gate executado na árvore real | ✅ |
+| Cada critério mapeado a asserção específica | ❌ RCF-002 e RCF-003 incompletos |
+| Sensor isolado e árvore real preservada | ✅ |
 
 ## Ranked Gaps / Fix Plans
 
-1. **Major — add landing-specific acceptance assertions for RCF-001..RCF-005.** The current `scripts/validate-seo.mjs` reads root `index.html` and does not assert the feature page's metadata, CTA links, comparison count, image attributes, or exact four sitemap assets.
-2. **Major — strengthen the gate to kill landing mutations.** The CSS survivor demonstrates that `npm test` can pass after a behavior-level change in the feature. Add assertions or a feature-specific validator covering the highest-risk landing behavior.
+1. **Major — RCF-003**: adicionar asserções para exatamente dois `.comparison-card`, títulos cozinha/fachada e duas legendas Antes/Depois por card; a mutação de rótulo sobreviveu.
+2. **Major — RCF-002**: verificar o telefone e o conteúdo contextual esperado de cada mensagem WhatsApp, não somente o prefixo `?text=`.
 
 ## Summary
 
-**Overall**: ❌ Not Ready (implementation appears present, but independent verification is not sufficient)
+**Overall**: ❌ Not Ready
 
-**Spec-anchored check**: 0/5 criteria have exact landing-specific test assertions; 5 evidence-or-zero gaps  
-**Sensor**: 1/2 mutations killed  
-**Gate**: `npm test` passed in the real tree
+**Spec-anchored check**: 3/5 completos; 2 gaps  
+**Sensor**: 2/3 mutations killed  
+**Gate**: 1 passed, 0 failed
 
-**What works**: Manual inspection finds the requested canonical, contextual WhatsApp CTAs, two kitchen/façade comparisons with four WebPs, image hints, and sitemap entries.
-
-**Next step**: add and run feature-specific tests/assertions, then re-run this independent validation.
+**Veredito**: a implementação está presente e o gate passa, mas a cobertura automatizada ainda não comprova integralmente RCF-002 e RCF-003. Não marcar PASS até fortalecer essas asserções e repetir a verificação.

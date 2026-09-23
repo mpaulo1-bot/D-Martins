@@ -314,6 +314,11 @@ assert(
   (campaignHtml.match(/https:\/\/wa\.me\/5527988624528\?text=/g) ?? []).length >= 3,
   "CTAs de WhatsApp da landing page insuficientes.",
 );
+assert(
+  (campaignHtml.match(/reforma%20de%20casa/gi) ?? []).length >= 3 &&
+    campaignHtml.includes("Grande%20Vit%C3%B3ria"),
+  "CTAs da landing sem contexto de reforma residencial na Grande Vitória.",
+);
 const campaignImages = [
   "../assets/reforma-de-casas/reforma-casa-cozinha-antes.webp",
   "../assets/reforma-de-casas/reforma-casa-cozinha-depois.webp",
@@ -323,6 +328,17 @@ const campaignImages = [
 for (const image of campaignImages) {
   assert(campaignHtml.includes(`src="${image}"`), `Imagem da landing ausente: ${image}.`);
 }
+assert(
+  (campaignHtml.match(/class="comparison-card"/g) ?? []).length === 2 &&
+    campaignHtml.includes("<h3>Reforma de cozinha</h3>") &&
+    campaignHtml.includes("<h3>Reforma de fachada</h3>"),
+  "A landing deve ter exatamente os cards de cozinha e fachada.",
+);
+assert(
+  (campaignHtml.match(/<figcaption>Antes<\/figcaption>/g) ?? []).length === 2 &&
+    (campaignHtml.match(/<figcaption>Depois<\/figcaption>/g) ?? []).length === 2,
+  "Comparações da landing devem ter dois rótulos Antes e dois Depois.",
+);
 for (const tag of campaignHtml.match(/<img\b[^>]*>/gi) ?? []) {
   assert(/\balt=["'][^"']+["']/i.test(tag), "Imagem da landing sem alt.");
   assert(/\bwidth=["']\d+["']/i.test(tag), "Imagem da landing sem width.");
