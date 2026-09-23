@@ -66,7 +66,7 @@
   font-weight: 800;
 }
 
-.campaign-section { padding-block: clamp(72px, 9vw, 120px); }
+.campaign-section { padding-block: clamp(60px, 7vw, 88px); }
 
 .comparison-grid {
   display: grid;
@@ -90,7 +90,7 @@
 .comparison-images figure { margin: 0; }
 .comparison-images img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 240px;
   object-fit: contain;
   background: var(--cream);
   border-radius: 8px;
@@ -113,5 +113,6 @@
   .comparison-grid,
   .campaign-process-grid { grid-template-columns: 1fr; }
   .comparison-card { padding: 18px; }
+  .comparison-images img { height: 150px; }
   .campaign-cta-inner { align-items: flex-start; flex-direction: column; }
 }
