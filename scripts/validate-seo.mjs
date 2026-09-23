@@ -24,6 +24,7 @@ const assert = (condition, message) => {
 
 const html = read("index.html");
 const indexablePages = discoverIndexablePages(root);
+const campaignHtml = read("reforma-de-casas/index.html");
 const robots = read("robots.txt");
 const sitemap = read("sitemap.xml");
 const llms = read("llms.txt");
@@ -290,6 +291,57 @@ assert(llms.includes("CREA-ES 50219/D"), "CREA ausente no llms.txt.");
 assert(
   llms.includes("Instagram: perfil recém-criado e ainda sem publicações"),
   "Situação do Instagram ausente no llms.txt.",
+);
+
+const campaignCanonical = campaignHtml.match(
+  /<link\b[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["'][^>]*>/i,
+)?.[1];
+assert(
+  campaignCanonical === "https://construtoradmartins.com.br/reforma-de-casas/",
+  "Canonical da landing page de reforma incorreta.",
+);
+assert(
+  /<title>Reforma de Casas na Grande Vitória \| D'Martins<\/title>/i.test(campaignHtml),
+  "Title da landing page de reforma ausente.",
+);
+assert(
+  /name=["']description["'][^>]*content=["'][^"']*reforma de casas na Grande Vitória/i.test(
+    campaignHtml,
+  ),
+  "Description da landing page de reforma ausente.",
+);
+assert(
+  (campaignHtml.match(/https:\/\/wa\.me\/5527988624528\?text=/g) ?? []).length >= 3,
+  "CTAs de WhatsApp da landing page insuficientes.",
+);
+const campaignImages = [
+  "../assets/reforma-de-casas/reforma-casa-cozinha-antes.webp",
+  "../assets/reforma-de-casas/reforma-casa-cozinha-depois.webp",
+  "../assets/reforma-de-casas/reforma-casa-fachada-antes.webp",
+  "../assets/reforma-de-casas/reforma-casa-fachada-depois.webp",
+];
+for (const image of campaignImages) {
+  assert(campaignHtml.includes(`src="${image}"`), `Imagem da landing ausente: ${image}.`);
+}
+for (const tag of campaignHtml.match(/<img\b[^>]*>/gi) ?? []) {
+  assert(/\balt=["'][^"']+["']/i.test(tag), "Imagem da landing sem alt.");
+  assert(/\bwidth=["']\d+["']/i.test(tag), "Imagem da landing sem width.");
+  assert(/\bheight=["']\d+["']/i.test(tag), "Imagem da landing sem height.");
+}
+assert(
+  /class="campaign-hero-image"[\s\S]*?fetchpriority="high"/i.test(campaignHtml),
+  "Imagem principal da landing sem prioridade alta.",
+);
+assert(
+  (campaignHtml.match(/loading="lazy"/gi) ?? []).length === 4,
+  "Imagens secundárias da landing devem usar lazy loading.",
+);
+assert(
+  sitemap.includes("https://construtoradmartins.com.br/reforma-de-casas/") &&
+    campaignImages.every((image) =>
+      sitemap.includes(`https://construtoradmartins.com.br/${image.slice(3)}`),
+    ),
+  "Landing ou imagens da reforma ausentes no sitemap.",
 );
 
 const idsInHtml = new Set(
