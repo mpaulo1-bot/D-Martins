@@ -23,6 +23,7 @@ const assert = (condition, message) => {
 };
 
 const html = read("index.html");
+const indexablePages = discoverIndexablePages(root);
 const robots = read("robots.txt");
 const sitemap = read("sitemap.xml");
 const llms = read("llms.txt");
@@ -240,17 +241,19 @@ for (const imageUrl of sitemap.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)) {
 }
 const expectedSitemapImages = [
   ...new Set(
-    [...html.matchAll(/<img\b[^>]*src=["']([^"']+)["'][^>]*>/gi)]
-      .map((match) => new URL(match[1], productionUrl))
-      .filter((url) => url.origin === new URL(productionUrl).origin)
-      .map((url) => url.href),
+    indexablePages.flatMap(({ html: pageHtml }) =>
+      [...pageHtml.matchAll(/<img\b[^>]*src=["']([^"']+)["'][^>]*>/gi)]
+        .map((match) => new URL(match[1], productionUrl))
+        .filter((url) => url.origin === new URL(productionUrl).origin)
+        .map((url) => url.href),
+    ),
   ),
 ];
-assert(expectedSitemapImages.length === 14, "Esperadas 14 imagens visíveis.");
+assert(expectedSitemapImages.length === 18, "Esperadas 18 imagens visíveis.");
 const sitemapImages = [
   ...sitemap.matchAll(/<image:loc>([^<]+)<\/image:loc>/g),
 ].map((match) => match[1]);
-assert(sitemapImages.length === 14, "Esperadas 14 imagens no sitemap.");
+assert(sitemapImages.length === 18, "Esperadas 18 imagens no sitemap.");
 assert(
   JSON.stringify(sitemapImages) === JSON.stringify(expectedSitemapImages),
   "Imagens do sitemap divergem das imagens visíveis.",
@@ -258,7 +261,7 @@ assert(
 const sitemapImageBlocks = [
   ...sitemap.matchAll(/<image:image>([\s\S]*?)<\/image:image>/g),
 ];
-assert(sitemapImageBlocks.length === 14, "Esperados 14 blocos image:image.");
+assert(sitemapImageBlocks.length === 18, "Esperados 18 blocos image:image.");
 for (const block of sitemapImageBlocks) {
   const childTags = [...block[1].matchAll(/<image:([a-z_]+)>/g)].map(
     (match) => match[1],

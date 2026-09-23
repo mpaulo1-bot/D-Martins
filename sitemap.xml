@@ -48,4 +48,19 @@
       <image:loc>https://construtoradmartins.com.br/assets/obras/servico-executado.webp</image:loc>
     </image:image>
   </url>
+  <url>
+    <loc>https://construtoradmartins.com.br/reforma-de-casas/</loc>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/reforma-de-casas/reforma-casa-cozinha-depois.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/reforma-de-casas/reforma-casa-cozinha-antes.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/reforma-de-casas/reforma-casa-fachada-antes.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://construtoradmartins.com.br/assets/reforma-de-casas/reforma-casa-fachada-depois.webp</image:loc>
+    </image:image>
+  </url>
 </urlset>

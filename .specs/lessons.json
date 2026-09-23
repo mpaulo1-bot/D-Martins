@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "promote_threshold": 2,
+  "window_days": 45,
+  "quarantine_threshold": 2,
+  "next_id": 2,
+  "lessons": [
+    {
+      "id": "L-001",
+      "key": "surviving_mutant::valide svgs com um parser xml real antes de aplicar assertions estruturais por regex",
+      "text": "Valide SVGs com um parser XML real antes de aplicar assertions estruturais por regex.",
+      "signal": "surviving_mutant",
+      "scope": "static-assets",
+      "status": "candidate",
+      "features": [
+        "favicon-brand-mark"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        ".specs/features/favicon-brand-mark/validation.md:60 (static-assets)"
+      ],
+      "created": "2026-09-22T22:14:32Z",
+      "last_seen": "2026-09-22T22:14:32Z"
+    }
+  ]
+}

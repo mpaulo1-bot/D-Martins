@@ -30,3 +30,9 @@ coverage/
 # Chaves locais
 id_rsa
 id_rsa.pub
+
+.agents/
+.claude/
+.cursor/
+.windsurf/
+
