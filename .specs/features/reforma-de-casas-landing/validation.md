@@ -1,3 +1,36 @@
+# Reforma de casas — verificação independente da troca da foto
+
+**Data:** 2026-09-24
+**Spec:** `.specs/features/reforma-de-casas-landing/spec.md:33-35` (RCF-003)
+**Diff verificado:** `579e311..8d318e7`
+**Verificador:** subagente independente (autor ≠ verificador)
+**Resultado:** PASS — a fachada “Antes” usa o novo WebP na página, nos dados estruturados e no sitemap, com dimensões corretas. As outras três fotos da comparação não foram alteradas.
+
+## Resultado definido pelo spec e evidência
+
+| Critério de RCF-003 | Evidência `arquivo:linha` e asserção | Resultado |
+| --- | --- | --- |
+| Exatamente duas comparações, cozinha e fachada, cada uma com Antes e Depois | `scripts/validate-seo.mjs:339-347` exige dois `comparison-card`, ambos os títulos, dois rótulos `Antes` e dois `Depois`; `reforma-de-casas/index.html:149-157` mostra os quatro `img`. | PASS |
+| Quatro WebPs em `assets/reforma-de-casas/`; fachada Antes aponta para `reforma-casa-fachada-antes1.webp` | `scripts/validate-seo.mjs:322-330` exige os quatro `src` específicos; `reforma-de-casas/index.html:156` contém o novo caminho. O diff não modifica os outros três arquivos WebP nem suas referências. | PASS |
+| Fachada Antes no dado estruturado | `scripts/validate-seo.mjs:334` exige o `contentUrl` exato; `reforma-de-casas/index.html:83` contém esse valor. | PASS |
+| Fachada Antes no sitemap | `scripts/validate-seo.mjs:255-260` exige correspondência exata entre imagens visíveis e sitemap; `scripts/validate-seo.mjs:389-393` exige as quatro URLs da landing; `sitemap.xml:60` contém a nova URL. | PASS |
+| Dimensões 6000 × 3416 px | `scripts/validate-seo.mjs:335` exige `width="6000" height="3416"` no `img`; `reforma-de-casas/index.html:156` corresponde. O cabeçalho binário VP8X do novo WebP declara largura 5999+1 e altura 3415+1, confirmando as dimensões reais. | PASS |
+
+O valor esperado do teste coincide com o nome e as dimensões definidos em `spec.md:35`; não há lacuna de precisão nesta alteração. `git diff --name-only 579e311..8d318e7 -- assets/reforma-de-casas` lista somente `reforma-casa-fachada-antes1.webp`; as outras fotos e as referências em `reforma-de-casas/index.html:149-150,157` e `sitemap.xml:54,57,63` permaneceram iguais. A mudança também inclui alt e legenda coerentes com o estado “Antes” em `reforma-de-casas/index.html:83-84,156`.
+
+## Gate e sensor
+
+- `npm run build`: PASS (exit 0). O gerador produziu 2 URLs; SEO e layout passaram, sem falhas ou testes pulados. O projeto publica resultados por script, sem contagem individual de casos.
+- `git diff --check 579e311..8d318e7`: PASS.
+- Mutação isolada: no worktree descartável sobre `8d318e7`, alterei somente `reforma-de-casas/index.html:156`, trocando o `src` da fachada Antes pelo WebP antigo. `npm run check:seo` terminou com exit 1 em `scripts/validate-seo.mjs:258` (`Imagens do sitemap divergem das imagens visíveis`). **Sensor: 1/1 mutação morta, 0 sobreviventes; PASS.**
+- O worktree foi removido. O `git status --porcelain=v1` da árvore real permaneceu igual ao baseline anterior ao sensor: apenas `.specs/STATE.md` e `.tmp-photo-study/` não rastreados. Este relatório é a única edição da verificação.
+
+**Estado desta verificação:** PASS — RCF-003 no diff `579e311..8d318e7`. Nenhuma tarefa de correção.
+
+---
+
+## Verificação anterior: RCF-008 (preservada para histórico)
+
 # Reforma de casas — validação independente de RCF-008
 
 **Data:** 2026-09-24
