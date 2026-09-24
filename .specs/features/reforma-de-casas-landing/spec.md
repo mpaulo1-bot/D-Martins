@@ -13,6 +13,7 @@ Disponibilizar uma landing page indexável para campanhas de Google Ads sobre re
 - O endereço público será servido por hospedagem estática com `reforma-de-casas/index.html`.
 - Os pares cozinha e fachada foram confirmados pelo cliente como comparações corretas.
 - Não há endereço público do Instagram a incluir nesta página.
+- Open questions: none.
 
 ## User Stories
 
@@ -45,6 +46,10 @@ Quando o sitemap for publicado, ele deve conter a URL canônica da landing page 
 
 Quando o visitante avaliar a contratação de uma reforma, a página deve explicar critérios de escolha de materiais, cuidados para comparar empresas e pelo menos três qualidades verificáveis da D'Martins.
 
+### RCF-007 — Apresentação responsiva
+
+Quando a página for exibida em desktop, o hero deve separar texto e fotografia em duas colunas e as seções de materiais, contratação, qualidades e processo devem apresentar títulos e cartões com hierarquia visual consistente. Quando a largura for de até 760 px, hero e cartões devem empilhar sem deslocamento horizontal. As quatro fotos da comparação devem permanecer inteiras nos quadros.
+
 ## Out of Scope
 
 - Não afirmar que banheiro possui comparação antes/depois.
@@ -61,3 +66,4 @@ Quando o visitante avaliar a contratação de uma reforma, a página deve explic
 | RCF-004 | `img` attributes and loading hints | SEO validator |
 | RCF-005 | `sitemap.xml` URL and image entries | SEO validator |
 | RCF-006 | Material, hiring and quality guidance sections | SEO validator and content inspection |
+| RCF-007 | `reforma-de-casas/index.html` and `src/reforma-de-casas.css` | Desktop/mobile visual review and SEO gate |
