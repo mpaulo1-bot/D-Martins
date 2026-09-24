@@ -52,7 +52,7 @@ Quando a página for exibida em desktop, o hero deve separar texto e fotografia 
 
 ### RCF-008 — Comparação ampliável
 
-Quando a seção de resultados for exibida em desktop, cada obra deve ocupar uma linha própria e suas fotos Antes e Depois devem aparecer lado a lado, em quadros maiores que os anteriores. Quando a largura for de até 760 px, as fotos Antes e Depois de cada obra devem aparecer em uma única coluna, sem corte ou deslocamento horizontal. Quando o visitante clicar ou acionar pelo teclado qualquer foto da comparação, a página deve abrir a imagem correspondente ampliada com sua identificação; o botão de fechar e a tecla Escape devem fechar a ampliação e devolver o foco ao controle acionado.
+Quando a seção de resultados for exibida em desktop, cada obra deve ocupar uma linha própria e suas fotos Antes e Depois devem aparecer lado a lado, em quadros maiores que os anteriores. Quando a largura for de até 760 px, as fotos Antes e Depois de cada obra devem aparecer em uma única coluna, sem corte ou deslocamento horizontal. Quando o visitante clicar ou acionar pelo teclado qualquer foto da comparação, a página deve abrir a imagem correspondente em uma janela sobreposta com legenda formada pelo nome da obra e pelo rótulo Antes ou Depois; em uma tela de 390 px, a imagem aberta deve medir pelo menos 160 px de largura e 180 px de altura. O botão de fechar e a tecla Escape devem fechar a ampliação e devolver o foco ao controle acionado.
 
 ## Out of Scope
 

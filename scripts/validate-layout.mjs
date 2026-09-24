@@ -122,6 +122,12 @@ try {
     const triggers = page.locator(".comparison-images button");
     assert.equal(await triggers.count(), 4, "Cada foto deve ser acionavel.");
     const dialog = page.locator(".comparison-lightbox");
+    const expectedCaptions = [
+      "Reforma de cozinha · Antes",
+      "Reforma de cozinha · Depois",
+      "Reforma de fachada · Antes",
+      "Reforma de fachada · Depois",
+    ];
     for (const index of [0, 1, 2, 3]) {
       const trigger = triggers.nth(index);
       if (index === 0) {
@@ -135,8 +141,11 @@ try {
       assert.equal(await dialog.locator("img").getAttribute("src"),
         await trigger.locator("img").getAttribute("src"),
         "A ampliacao deve exibir a foto acionada.");
-      assert((await dialog.locator("figcaption").innerText()).trim().length > 0,
-        "A ampliacao deve identificar a foto.");
+      assert.equal((await dialog.locator("figcaption").innerText()).trim(), expectedCaptions[index],
+        "A ampliacao deve identificar a obra e a etapa da foto.");
+      const enlarged = await dialog.locator("img").boundingBox();
+      assert(enlarged.width >= 160 && enlarged.height >= 180,
+        "Em 390px, a foto aberta deve ter tamanho legivel.");
       if (index === 0) {
         await page.keyboard.press("Escape");
       } else {
