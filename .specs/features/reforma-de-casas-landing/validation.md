@@ -76,3 +76,33 @@ Mutações executadas separadamente em worktree descartável sobre `1d71578`, co
 O diff é restrito ao spec, HTML/CSS e script da landing e teste de layout. A implementação usa os padrões já presentes de CSS responsivo e validação Playwright. A home não foi alterada no diff. Os testes de RCF-008 correspondem aos resultados observáveis do spec; não há lacuna ou tarefa de correção nesta rodada.
 
 **Estado:** PASS — RCF-008 verificado no diff `888a4e5..1d71578`.
+
+---
+
+# Reforma de casas — verificação independente de RCF-009
+
+**Data:** 2026-09-24
+**Spec:** `.specs/features/reforma-de-casas-landing/spec.md:57`
+**Diff verificado:** `9eb3f43..f58a24c`
+**Verificador:** subagente independente (autor ≠ verificador)
+**Resultado:** PASS — as quatro fotos mantêm a proporção natural, acompanham os quadros clicáveis e os pares desktop terminam com diferença de altura de até 15 px.
+
+| Critério de RCF-009 | Resultado esperado e evidência `arquivo:linha` | Resultado |
+| --- | --- | --- |
+| Quatro fotos completas a 1440, 760 e 390 px | `scripts/validate-layout.mjs:23-30,95-97` abre as três larguras e decodifica cada imagem; `scripts/validate-layout.mjs:73-75,125-126` exige quatro imagens carregadas com `object-fit: contain`; `src/reforma-de-casas.css:252-255` define largura 100%, altura automática e `contain`. | PASS |
+| Proporção natural e quadro sem faixas vazias, diferença de até 3 px por eixo | `scripts/validate-layout.mjs:76-86` mede foto, botão e proporção intrínseca; `scripts/validate-layout.mjs:128-133` exige diferença de proporção até 0,02 por arredondamento e diferenças quadro/foto de até 3 px em largura e altura, nas três larguras. `src/reforma-de-casas.css:234-243` define o botão com borda de 1 px e sem padding. | PASS |
+| Em 1440 px, duas fotos de cada par com altura final a até 15 px, sem esticar ou cortar | `scripts/validate-layout.mjs:106-109` compara as alturas dos dois pares com limite exato de 15 px; `src/reforma-de-casas.css:221-226` usa colunas 3:4 e 4:3; `src/reforma-de-casas.css:254-255` mantém altura automática. | PASS |
+| Em 760 e 390 px, cada par ocupa uma coluna sem deslocamento horizontal | `scripts/validate-layout.mjs:117-120` exige ordem vertical e largura de conteúdo dentro do viewport; `src/reforma-de-casas.css:686-689` define uma coluna para os dois pares. | PASS |
+
+Os limites numéricos das asserções correspondem ao spec. A tolerância de 0,02 na razão da caixa da imagem evita diferenças de arredondamento subpixel; a altura automática preserva a proporção renderizada. Não há lacuna de precisão ou alteração fora do CSS e do validador de layout neste diff. Não existe `tasks.md` nesta feature; o gate disponível é `npm run build`.
+
+## Gate e sensor de discriminação
+
+- `npm run build`: PASS (exit 0). Sitemap com 2 URLs; verificações SEO e layout aprovadas. O projeto usa scripts sem contagem individual de casos; nenhum teste foi pulado.
+- `git diff --check 9eb3f43..f58a24c`: PASS.
+- Mutação 1, em worktree isolado sobre `f58a24c`: `src/reforma-de-casas.css:254`, `height: auto` → `height: 520px`. `npm test` falhou (exit 1) em `scripts/validate-layout.mjs:128`, detectando a faixa ou a proporção errada em 1440 px. **Morta.**
+- Mutação 2, no mesmo worktree isolado após restaurar `height: auto`: `src/reforma-de-casas.css:226`, colunas `4fr 3fr` → `5fr 2fr`. `npm test` falhou (exit 1) em `scripts/validate-layout.mjs:106`, detectando alturas desiguais no par da fachada. **Morta.**
+- **Sensor: 2/2 mutações mortas, 0 sobreviventes; PASS.** O worktree isolado foi removido. O status da árvore real antes e depois permaneceu `?? .specs/STATE.md` e `?? .tmp-photo-study/`, além da edição deste relatório após a medição.
+- **Incidente de limpeza:** o vínculo `node_modules` criado para o worktree isolado também removeu o diretório gerado `node_modules` da árvore real ao remover o worktree. Reinstalei as dependências com `npm ci` (exit 0, `playwright-core` restaurado) e executei `npm test` na árvore real (exit 0, SEO e layout aprovados). Não houve alteração em arquivos rastreados nem nos dois diretórios não rastreados preexistentes. Nenhuma outra remoção foi feita.
+
+**Estado desta verificação:** PASS — RCF-009 no diff `9eb3f43..f58a24c`. Nenhuma tarefa de correção.
