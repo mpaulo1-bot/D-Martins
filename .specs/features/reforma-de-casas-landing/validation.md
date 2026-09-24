@@ -1,62 +1,48 @@
-# Reforma de casas — Validation
+# Reforma de casas — validação independente
 
-**Date**: 2026-09-24  
-**Spec**: `.specs/features/reforma-de-casas-landing/spec.md`  
-**Diff range**: `3a9f9a2`  
-**Verifier**: independent verifier (author ≠ verifier)
+**Data:** 2026-09-24
+**Spec:** `.specs/features/reforma-de-casas-landing/spec.md`
+**Diff:** `11a544e^..b4555b7`
+**Verificador:** subagente independente (autor ≠ verificador)
+**Result:** PASS — RCF-001 a RCF-007 confirmados; build e 2/2 mutações de layout eliminadas.
 
-## Task Completion
+## Critérios de aceitação
 
-No `tasks.md` exists for this feature; task status is not applicable.
-
-## Spec-Anchored Acceptance Criteria
-
-| Criterion | Spec-defined outcome | `file:line` + assertion expression | Result |
-| --- | --- | --- | --- |
-| RCF-001: página canônica em pt-BR com title e description específicos | `lang="pt-BR"`; canonical exata; title e description de reforma na Grande Vitória | `scripts/validate-seo.mjs:296-311` — canonical exata e regex de title/description; `reforma-de-casas/index.html:2,6,8-13` — implementação | ✅ PASS |
-| RCF-002: CTAs para WhatsApp com telefone correto e mensagens contextualizadas | ao menos três links `wa.me` para `+55 27 98862-4528`, com contexto de reforma na Grande Vitória | `scripts/validate-seo.mjs:313-320` — count de URLs, contexto e telefone; `reforma-de-casas/index.html:109,122,231` — três CTAs | ✅ PASS |
-| RCF-003: exatamente duas comparações cozinha/fachada com Antes/Depois e quatro WebPs | dois cards nomeados cozinha/fachada, dois rótulos Antes e dois Depois, quatro assets específicos | `scripts/validate-seo.mjs:322-340` — quatro `src`, dois cards e contagens de legendas; `reforma-de-casas/index.html:139-151` — implementação | ✅ PASS |
-| RCF-004: imagens acessíveis e carregamento adequado | todo `img` com `alt`, `width`, `height`; hero prioritária; quatro secundárias lazy | `scripts/validate-seo.mjs:368-379` — atributos, `fetchpriority="high"` e count lazy=4; `reforma-de-casas/index.html:115,143-151` — implementação | ✅ PASS |
-| RCF-005: sitemap com canonical e quatro imagens sem tracking | URL da landing e quatro WebPs no sitemap, sem parâmetros de rastreamento | `scripts/validate-seo.mjs:235-260,381-387` — ausência de tracking e entradas; `sitemap.xml:51-64` — implementação | ✅ PASS |
-| RCF-006: conteúdo de decisão | seções sobre materiais, comparação/contratação e pelo menos três qualidades verificáveis da D'Martins | `scripts/validate-seo.mjs:342-366` — IDs, frases de materiais, checklist e qualidades; `reforma-de-casas/index.html:157-212` — implementação | ✅ PASS |
-
-**Status**: ✅ All ACs covered; outcomes match the spec.
-
-## Gate Check
-
-- **Gate command**: `npm test`
-- **Result**: 1 passed, 0 failed, 0 skipped
-- **Output**: `SEO check aprovado: metadados, schema, sitemap, robots, imagens e links.`
-- **Real-tree failures**: nenhum
-
-## Discrimination Sensor
-
-Sensor executado em worktree temporário `E:\\tmp-verifier-reforma-20260924`; a árvore real permaneceu inalterada (`?? .specs/STATE.md` e `?? .tmp-photo-study/` antes e depois).
-
-| Mutation | Scratch target | Result |
+| Critério | Resultado esperado e evidência `file:line` | Resultado |
 | --- | --- | --- |
-| 1 | `reforma-de-casas/index.html:159`: alterado `Escolha de materiais` para `Escolha de insumos` | ✅ Killed — `npm test` falhou em `Orientações de escolha de materiais ausentes ou incompletas.` |
-| 2 | `reforma-de-casas/index.html:194`: alterado `Escopo detalhado` para `Escopo resumido` | ✅ Killed — `npm test` falhou em `Checklist para contratação ausente ou incompleto.` |
-| 3 | `reforma-de-casas/index.html:208`: alterado `CREA-ES` para `CREA-XX` | ✅ Killed — `npm test` falhou em `Qualidades verificáveis da D'Martins ausentes.` |
+| RCF-001 | HTML `pt-BR`, canonical exata e metadados de reformas na Grande Vitória: `reforma-de-casas/index.html:2,6-13`; asserções da URL, title e description em `scripts/validate-seo.mjs:296-311`. | PASS |
+| RCF-002 | Três links `wa.me/5527988624528?text=` com mensagem contextualizada: `reforma-de-casas/index.html:110,122,236`; asserções de quantidade e contexto em `scripts/validate-seo.mjs:313-320`. | PASS |
+| RCF-003 | Exatamente dois cards, cozinha e fachada, cada um com Antes/Depois e quatro WebPs: `reforma-de-casas/index.html:145-157`; asserções de arquivos, quantidade e rótulos em `scripts/validate-seo.mjs:322-340`. | PASS |
+| RCF-004 | Cinco `img` com `alt`, `width` e `height`; hero prioritário e quatro imagens da galeria tardias: `reforma-de-casas/index.html:132,148-156`; asserções em `scripts/validate-seo.mjs:368-379`. | PASS |
+| RCF-005 | URL canônica e quatro imagens no sitemap, sem tracking: `sitemap.xml:51-65`; asserções de canonical, rastreamento, existência e correspondência das imagens em `scripts/validate-seo.mjs:228-260,381-387`. | PASS |
+| RCF-006 | Critérios de materiais, comparação de empresas e qualidades identificáveis (responsável técnico/CREA, experiência e atendimento regional): `reforma-de-casas/index.html:162-216`; asserções em `scripts/validate-seo.mjs:342-366`. | PASS |
+| RCF-007 | Hero em duas colunas: `src/reforma-de-casas.css:40-45`, asserção geométrica em `scripts/validate-layout.mjs:79-82`; seções com títulos e cartões: `reforma-de-casas/index.html:162-229`, asserção de tamanho, contagem e estilo em `scripts/validate-layout.mjs:34-51,96-101`; empilhamento e ausência de overflow a 760/390 px: `src/reforma-de-casas.css:555-566`, asserções em `scripts/validate-layout.mjs:84-93`; quatro fotos carregadas e inteiras: `src/reforma-de-casas.css:219-225`, asserção em `scripts/validate-layout.mjs:61-64,96-98`. | PASS |
 
-**Sensor depth**: lightweight, 3 mutations focadas nas novas seções  
-**Result**: 3/3 killed — ✅ PASS
+Os resultados de RCF-007 são medidos em Chrome/Edge headless a 1440, 760 e 390 px. “Hierarquia visual consistente” é uma expressão qualitativa; o teste a operacionaliza por tamanho dos títulos, presença/estilo e empilhamento dos cartões. A inspeção automatizada não cobre todos os navegadores, zooms ou tamanhos intermediários. A resolução da rota pública depende da hospedagem estática, conforme a premissa do spec.
 
-## Code Quality
+## Gate e integridade
 
-| Principle | Status |
+- `npm run build`: PASS. Gerou sitemap com duas URLs indexáveis; `validate-seo.mjs` e `validate-layout.mjs` passaram.
+- `git diff 11a544e^ b4555b7 --check`: PASS.
+- A feature não possui `tasks.md`; `npm run build` é o gate de projeto. Antes de `b4555b7`, `npm test` executava apenas a verificação de SEO; agora executa SEO e layout, sem retirada de testes.
+- O diff dos dois commits cobre spec, landing HTML/CSS, teste de layout, scripts/dependências de build e README. A página inicial e sua galeria não foram alteradas.
+
+## Sensor de discriminação
+
+Mutações executadas em worktree temporário em `b4555b7`, usando as dependências já instaladas. O worktree foi removido depois dos testes. O estado da árvore real, fora da atualização deste relatório, era `M .specs/LESSONS.md`, `M .specs/features/reforma-de-casas-landing/validation.md`, `M .specs/lessons.json`, `?? .specs/STATE.md` e `?? .tmp-photo-study/` antes e depois.
+
+| Mutação | Resultado |
 | --- | --- |
-| Escopo cirúrgico / sem correção de código nesta verificação | ✅ |
-| Gate executado na árvore real | ✅ |
-| Sensor isolado e árvore real preservada | ✅ |
-| Cada critério mapeado a asserção específica | ✅ |
-| Testes não rasos para materiais, contratação e qualidades | ✅ |
+| `src/reforma-de-casas.css:42`: trocar as duas colunas do hero desktop por `grid-template-columns: 1fr`. | KILLED: `npm test` saiu 1 em `scripts/validate-layout.mjs:81`, “No desktop, texto e foto do hero devem ocupar colunas separadas.” |
+| `src/reforma-de-casas.css:566`: trocar o empilhamento até 760 px por `grid-template-columns: repeat(2, minmax(0, 1fr))`. | KILLED: `npm test` saiu 1 em `scripts/validate-layout.mjs:86`, “Em 760px, a foto do hero deve aparecer abaixo do texto.” |
 
-## Summary
+**Sensor:** 2/2 mutações eliminadas; nenhuma sobrevivente.
 
-**Overall**: ✅ Ready  
-**Spec-anchored check**: 6/6 ACs matched spec outcome  
-**Sensor**: 3/3 mutations killed  
-**Gate**: 1 passed, 0 failed
+## Qualidade e limites
 
-**Veredito**: PASS. RCF-001–RCF-006 têm evidência `file:line`, o gate passa e todas as mutações direcionadas às novas seções foram eliminadas pelos testes.
+- As asserções de SEO cobrem valores definidos pelo spec; o teste de layout confere geometria real, imagens decodificadas e estilos computados.
+- `playwright-core` requer Chrome ou Edge local, documentado em `README.md:24-25`. O build passou neste ambiente com navegador disponível.
+- Sem casos de borda adicionais definidos no spec. Sem UAT interativa nesta rodada.
+- Nenhuma lição nova: não houve mutante sobrevivente, falha de requisito ou desvio de implementação.
+
+**Estado:** PASS — pronto para revisão do resultado visual pelo usuário.

@@ -20,6 +20,12 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: .specs/features/favicon-brand-mark/validation.md:60 (static-assets)
 - last seen: 2026-09-22T22:14:32Z
 
+### L-002 - Teste no navegador a geometria e o overflow exigidos por critérios responsivos.
+- signal: `surviving_mutant` · recurrence: 1 feature(s) · scope: `landing` · harmful: 0
+- features: reforma-de-casas-landing
+- evidence: src/reforma-de-casas.css:42 (landing)
+- last seen: 2026-09-24T13:46:38Z
+
 ## Quarantined (failed when applied - ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

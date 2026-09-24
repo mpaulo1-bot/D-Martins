@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 2,
+  "next_id": 3,
   "lessons": [
     {
       "id": "L-001",
@@ -22,6 +22,24 @@
       ],
       "created": "2026-09-22T22:14:32Z",
       "last_seen": "2026-09-22T22:14:32Z"
+    },
+    {
+      "id": "L-002",
+      "key": "surviving_mutant::teste no navegador a geometria e o overflow exigidos por criterios responsivos",
+      "text": "Teste no navegador a geometria e o overflow exigidos por critérios responsivos.",
+      "signal": "surviving_mutant",
+      "scope": "landing",
+      "status": "candidate",
+      "features": [
+        "reforma-de-casas-landing"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "src/reforma-de-casas.css:42 (landing)"
+      ],
+      "created": "2026-09-24T13:46:38Z",
+      "last_seen": "2026-09-24T13:46:38Z"
     }
   ]
 }
