@@ -26,6 +26,18 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: src/reforma-de-casas.css:42 (landing)
 - last seen: 2026-09-24T13:46:38Z
 
+### L-003 - Assert the exact gallery caption, not just that a caption exists.
+- signal: `surviving_mutant` · recurrence: 1 feature(s) · scope: `landing` · harmful: 0
+- features: reforma-de-casas-landing
+- evidence: RCF-008 caption mutant (landing)
+- last seen: 2026-09-24T14:51:10Z
+
+### L-004 - Assert rendered image dimensions for gallery enlargement, not just dialog visibility.
+- signal: `surviving_mutant` · recurrence: 1 feature(s) · scope: `landing` · harmful: 0
+- features: reforma-de-casas-landing
+- evidence: RCF-008 20px lightbox mutant (landing)
+- last seen: 2026-09-24T14:51:14Z
+
 ## Quarantined (failed when applied - ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

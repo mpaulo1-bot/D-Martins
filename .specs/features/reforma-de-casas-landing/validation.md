@@ -1,48 +1,45 @@
-# Reforma de casas — validação independente
+# Reforma de casas — validação independente de RCF-008
 
 **Data:** 2026-09-24
-**Spec:** `.specs/features/reforma-de-casas-landing/spec.md`
-**Diff:** `11a544e^..b4555b7`
+**Spec:** `.specs/features/reforma-de-casas-landing/spec.md:53`
+**Diff verificado:** `888a4e5..1d71578`
 **Verificador:** subagente independente (autor ≠ verificador)
-**Result:** PASS — RCF-001 a RCF-007 confirmados; build e 2/2 mutações de layout eliminadas.
+**Resultado:** PASS — os resultados de RCF-008 coincidem com o spec, o build passa e as duas regressões conhecidas são detectadas.
 
-## Critérios de aceitação
+## Resultado definido pelo spec e evidência
 
-| Critério | Resultado esperado e evidência `file:line` | Resultado |
+| Critério de RCF-008 | Resultado esperado; asserção `arquivo:linha` | Resultado |
 | --- | --- | --- |
-| RCF-001 | HTML `pt-BR`, canonical exata e metadados de reformas na Grande Vitória: `reforma-de-casas/index.html:2,6-13`; asserções da URL, title e description em `scripts/validate-seo.mjs:296-311`. | PASS |
-| RCF-002 | Três links `wa.me/5527988624528?text=` com mensagem contextualizada: `reforma-de-casas/index.html:110,122,236`; asserções de quantidade e contexto em `scripts/validate-seo.mjs:313-320`. | PASS |
-| RCF-003 | Exatamente dois cards, cozinha e fachada, cada um com Antes/Depois e quatro WebPs: `reforma-de-casas/index.html:145-157`; asserções de arquivos, quantidade e rótulos em `scripts/validate-seo.mjs:322-340`. | PASS |
-| RCF-004 | Cinco `img` com `alt`, `width` e `height`; hero prioritário e quatro imagens da galeria tardias: `reforma-de-casas/index.html:132,148-156`; asserções em `scripts/validate-seo.mjs:368-379`. | PASS |
-| RCF-005 | URL canônica e quatro imagens no sitemap, sem tracking: `sitemap.xml:51-65`; asserções de canonical, rastreamento, existência e correspondência das imagens em `scripts/validate-seo.mjs:228-260,381-387`. | PASS |
-| RCF-006 | Critérios de materiais, comparação de empresas e qualidades identificáveis (responsável técnico/CREA, experiência e atendimento regional): `reforma-de-casas/index.html:162-216`; asserções em `scripts/validate-seo.mjs:342-366`. | PASS |
-| RCF-007 | Hero em duas colunas: `src/reforma-de-casas.css:40-45`, asserção geométrica em `scripts/validate-layout.mjs:79-82`; seções com títulos e cartões: `reforma-de-casas/index.html:162-229`, asserção de tamanho, contagem e estilo em `scripts/validate-layout.mjs:34-51,96-101`; empilhamento e ausência de overflow a 760/390 px: `src/reforma-de-casas.css:555-566`, asserções em `scripts/validate-layout.mjs:84-93`; quatro fotos carregadas e inteiras: `src/reforma-de-casas.css:219-225`, asserção em `scripts/validate-layout.mjs:61-64,96-98`. | PASS |
+| Desktop: cada obra em linha própria | `scripts/validate-layout.mjs:89` — `comparisonCards[1].top >= comparisonCards[0].bottom - 2` a 1440 px. | PASS |
+| Desktop: Antes e Depois lado a lado, em quadros maiores | `scripts/validate-layout.mjs:91` — `before.right + 8 <= after.left` para os dois pares; `scripts/validate-layout.mjs:93` — altura do quadro `>= 360` px, maior que os 240 px anteriores. | PASS |
+| Até 760 px: cada par em uma coluna, sem corte ou deslocamento horizontal | `scripts/validate-layout.mjs:102` — `after.top >= before.bottom - 2` a 760 e 390 px; `scripts/validate-layout.mjs:104` — `scrollWidth <= clientWidth + 1`; `scripts/validate-layout.mjs:111` — quatro imagens carregadas e `object-fit: contain`. | PASS |
+| Clique ou teclado em qualquer foto abre a imagem correspondente | `scripts/validate-layout.mjs:123` — quatro controles; `scripts/validate-layout.mjs:134-139` — Enter na primeira foto, clique nas outras, `dialog.open === true`; `scripts/validate-layout.mjs:141` — `src` da imagem aberta igual ao da foto acionada. | PASS |
+| Legenda contém obra e Antes/Depois correspondentes | `scripts/validate-layout.mjs:125-130` — quatro valores específicos; `scripts/validate-layout.mjs:144` — `figcaption.innerText.trim() === expectedCaptions[index]` em cada abertura. | PASS |
+| Imagem aberta legível em tela de 390 px | `scripts/validate-layout.mjs:146-147` — `boundingBox().width >= 160 && height >= 180` para as quatro fotos. | PASS |
+| Botão fechar e Escape fecham e restauram foco | `scripts/validate-layout.mjs:149-156` — Escape na primeira, botão nas outras; `dialog.open === false` e `document.activeElement === trigger` após cada fechamento. | PASS |
 
-Os resultados de RCF-007 são medidos em Chrome/Edge headless a 1440, 760 e 390 px. “Hierarquia visual consistente” é uma expressão qualitativa; o teste a operacionaliza por tamanho dos títulos, presença/estilo e empilhamento dos cartões. A inspeção automatizada não cobre todos os navegadores, zooms ou tamanhos intermediários. A resolução da rota pública depende da hospedagem estática, conforme a premissa do spec.
+As asserções verificam os valores exigidos pelo spec, incluindo as quatro legendas exatas e os dois limites dimensionais; não há lacuna de precisão em RCF-008. O teste cobre os viewports especificados, mas não substitui avaliação visual humana em outros tamanhos.
 
 ## Gate e integridade
 
-- `npm run build`: PASS. Gerou sitemap com duas URLs indexáveis; `validate-seo.mjs` e `validate-layout.mjs` passaram.
-- `git diff 11a544e^ b4555b7 --check`: PASS.
-- A feature não possui `tasks.md`; `npm run build` é o gate de projeto. Antes de `b4555b7`, `npm test` executava apenas a verificação de SEO; agora executa SEO e layout, sem retirada de testes.
-- O diff dos dois commits cobre spec, landing HTML/CSS, teste de layout, scripts/dependências de build e README. A página inicial e sua galeria não foram alteradas.
+- `npm run build`: PASS (exit 0); geração do sitemap, validação SEO e validação de layout concluídas.
+- O projeto usa dois scripts de validação (`scripts/validate-seo.mjs` e `scripts/validate-layout.mjs`), sem contagem de casos individual publicada pelo runner. Nenhum teste foi pulado ou falhou no gate normal.
+- `git diff 888a4e5..1d71578` acrescenta as asserções de RCF-008 em `scripts/validate-layout.mjs`; as asserções anteriores não foram removidas. Não existe `tasks.md` desta feature; `npm run build` é o gate disponível.
+- UAT visual humana não foi realizada nesta verificação automatizada.
 
 ## Sensor de discriminação
 
-Mutações executadas em worktree temporário em `b4555b7`, usando as dependências já instaladas. O worktree foi removido depois dos testes. O estado da árvore real, fora da atualização deste relatório, era `M .specs/LESSONS.md`, `M .specs/features/reforma-de-casas-landing/validation.md`, `M .specs/lessons.json`, `?? .specs/STATE.md` e `?? .tmp-photo-study/` antes e depois.
+Mutações executadas separadamente em worktree descartável sobre `1d71578`, com `npm test` em cada tentativa:
 
-| Mutação | Resultado |
+| Mutação isolada | Resultado |
 | --- | --- |
-| `src/reforma-de-casas.css:42`: trocar as duas colunas do hero desktop por `grid-template-columns: 1fr`. | KILLED: `npm test` saiu 1 em `scripts/validate-layout.mjs:81`, “No desktop, texto e foto do hero devem ocupar colunas separadas.” |
-| `src/reforma-de-casas.css:566`: trocar o empilhamento até 760 px por `grid-template-columns: repeat(2, minmax(0, 1fr))`. | KILLED: `npm test` saiu 1 em `scripts/validate-layout.mjs:86`, “Em 760px, a foto do hero deve aparecer abaixo do texto.” |
+| `src/reforma-gallery.js:15`: substituir a legenda específica por `Foto ampliada`. | **MORTA** — `npm test` exit 1 em `scripts/validate-layout.mjs:144`: esperado `Reforma de cozinha · Antes`, recebido `Foto ampliada`. |
+| `src/reforma-de-casas.css:301`: reduzir `max-height` da imagem do diálogo para `20px`. | **MORTA** — `npm test` exit 1 em `scripts/validate-layout.mjs:147`: a dimensão aberta ficou abaixo do mínimo de 160 × 180 px. |
 
-**Sensor:** 2/2 mutações eliminadas; nenhuma sobrevivente.
+**Sensor:** 2/2 mutações mortas, 0 sobreviventes; PASS. O worktree foi removido. `git status --porcelain=v1` da árvore real permaneceu igual ao baseline antes da edição deste relatório: alterações preexistentes em `.specs/LESSONS.md`, `.specs/lessons.json`, `validation.md` e arquivos não rastreados `.specs/STATE.md` e `.tmp-photo-study/`.
 
-## Qualidade e limites
+## Qualidade e conclusão
 
-- As asserções de SEO cobrem valores definidos pelo spec; o teste de layout confere geometria real, imagens decodificadas e estilos computados.
-- `playwright-core` requer Chrome ou Edge local, documentado em `README.md:24-25`. O build passou neste ambiente com navegador disponível.
-- Sem casos de borda adicionais definidos no spec. Sem UAT interativa nesta rodada.
-- Nenhuma lição nova: não houve mutante sobrevivente, falha de requisito ou desvio de implementação.
+O diff é restrito ao spec, HTML/CSS e script da landing e teste de layout. A implementação usa os padrões já presentes de CSS responsivo e validação Playwright. A home não foi alterada no diff. Os testes de RCF-008 correspondem aos resultados observáveis do spec; não há lacuna ou tarefa de correção nesta rodada.
 
-**Estado:** PASS — pronto para revisão do resultado visual pelo usuário.
+**Estado:** PASS — RCF-008 verificado no diff `888a4e5..1d71578`.

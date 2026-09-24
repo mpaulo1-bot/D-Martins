@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 3,
+  "next_id": 5,
   "lessons": [
     {
       "id": "L-001",
@@ -40,6 +40,42 @@
       ],
       "created": "2026-09-24T13:46:38Z",
       "last_seen": "2026-09-24T13:46:38Z"
+    },
+    {
+      "id": "L-003",
+      "key": "surviving_mutant::assert the exact gallery caption not just that a caption exists",
+      "text": "Assert the exact gallery caption, not just that a caption exists.",
+      "signal": "surviving_mutant",
+      "scope": "landing",
+      "status": "candidate",
+      "features": [
+        "reforma-de-casas-landing"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "RCF-008 caption mutant (landing)"
+      ],
+      "created": "2026-09-24T14:51:10Z",
+      "last_seen": "2026-09-24T14:51:10Z"
+    },
+    {
+      "id": "L-004",
+      "key": "surviving_mutant::assert rendered image dimensions for gallery enlargement not just dialog visibility",
+      "text": "Assert rendered image dimensions for gallery enlargement, not just dialog visibility.",
+      "signal": "surviving_mutant",
+      "scope": "landing",
+      "status": "candidate",
+      "features": [
+        "reforma-de-casas-landing"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "RCF-008 20px lightbox mutant (landing)"
+      ],
+      "created": "2026-09-24T14:51:14Z",
+      "last_seen": "2026-09-24T14:51:14Z"
     }
   ]
 }
