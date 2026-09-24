@@ -56,7 +56,7 @@ Quando a seção de resultados for exibida em desktop, cada obra deve ocupar uma
 
 ### RCF-009 — Ajuste das fotos aos quadros
 
-Quando as quatro fotos de comparação forem exibidas em larguras de 1440, 760 e 390 px, cada foto deve manter sua proporção natural sem corte, e seu quadro clicável deve acompanhar sua altura, sem faixas vazias acima, abaixo ou nas laterais da imagem. A diferença entre as dimensões visíveis do quadro e da foto deve ser de no máximo 3 px por eixo, considerando a borda. Em 1440 px, as duas fotos de cada par devem terminar com diferença de altura de no máximo 15 px, sem esticar ou cortar nenhuma delas.
+Quando as quatro fotos de comparação forem exibidas em larguras de 1440, 760 e 390 px, os quadros Antes e Depois de uma mesma obra devem ter largura e altura iguais, com diferença máxima de 2 px por eixo. Os quadros da cozinha devem seguir proporção vertical 3:4 e os da fachada proporção horizontal 4:3, com tolerância de 0,02. Cada foto deve permanecer inteira, sem corte, e qualquer área que sua proporção não preencha deve mostrar uma versão desfocada da própria foto, não uma faixa lisa.
 
 ## Out of Scope
 
@@ -76,4 +76,4 @@ Quando as quatro fotos de comparação forem exibidas em larguras de 1440, 760 e
 | RCF-006 | Material, hiring and quality guidance sections | SEO validator and content inspection |
 | RCF-007 | `reforma-de-casas/index.html` and `src/reforma-de-casas.css` | Desktop/mobile visual review and SEO gate |
 | RCF-008 | Comparison markup, gallery script and CSS | Browser geometry and interaction tests |
-| RCF-009 | `src/reforma-de-casas.css` image sizing | Browser image/frame geometry tests |
+| RCF-009 | Comparison markup and `src/reforma-de-casas.css` | Browser frame geometry and image-fill tests |
