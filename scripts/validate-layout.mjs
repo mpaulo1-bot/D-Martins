@@ -73,6 +73,17 @@ async function inspect(width) {
         comparisonPhotosIntact: [...document.querySelectorAll(".comparison-images img")].every((img) =>
           img.complete && img.naturalWidth > 0 && getComputedStyle(img).objectFit === "contain",
         ),
+        comparisonFrames: [...document.querySelectorAll(".comparison-images img")].map((img) => {
+          const photo = img.getBoundingClientRect();
+          const frame = img.closest("button").getBoundingClientRect();
+          return {
+            photoWidth: photo.width,
+            photoHeight: photo.height,
+            frameWidth: frame.width,
+            frameHeight: frame.height,
+            naturalRatio: img.naturalWidth / img.naturalHeight,
+          };
+        }),
         sections,
       };
     });
@@ -92,6 +103,10 @@ try {
     "Antes e Depois devem aparecer lado a lado no desktop.");
   assert(desktop.comparisonPhotoHeight >= 360,
     "Os quadros das fotos devem oferecer destaque visual no desktop.");
+  assert(desktop.comparisonFrames.length === 4 &&
+    Math.abs(desktop.comparisonFrames[0].photoHeight - desktop.comparisonFrames[1].photoHeight) <= 15 &&
+    Math.abs(desktop.comparisonFrames[2].photoHeight - desktop.comparisonFrames[3].photoHeight) <= 15,
+  "No desktop, as fotos de cada par devem terminar quase na mesma altura sem corte.");
 
   for (const [index, mobile] of mobileLayouts.entries()) {
     const width = [760, 390][index];
@@ -110,6 +125,11 @@ try {
   for (const layout of [desktop, ...mobileLayouts]) {
     assert(layout.comparisonPhotosIntact,
       "As quatro fotos de comparação devem carregar sem corte.");
+    assert(layout.comparisonFrames.every(({ photoWidth, photoHeight, frameWidth, frameHeight, naturalRatio }) =>
+      Math.abs(photoWidth / photoHeight - naturalRatio) <= 0.02 &&
+      Math.abs(frameWidth - photoWidth) <= 3 &&
+      Math.abs(frameHeight - photoHeight) <= 3),
+    `Em ${layout.viewportWidth}px, os quadros devem acompanhar as proporções das fotos sem faixas vazias.`);
     assert(layout.sections.every(({ titleSize, cardCount, expectedCount, cardsStyled }) =>
       titleSize >= 32 && cardCount === expectedCount && cardsStyled),
     "As seções editoriais devem ter títulos destacados e cartões legíveis.");

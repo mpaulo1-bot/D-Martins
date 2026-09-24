@@ -187,6 +187,12 @@
   box-shadow: 0 18px 42px rgba(38, 56, 70, 0.08);
 }
 
+.comparison-card:first-child {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+}
+
 .comparison-heading {
   display: flex;
   align-items: baseline;
@@ -209,6 +215,15 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(16px, 2.5vw, 30px);
+  align-items: start;
+}
+
+.comparison-card:first-child .comparison-images {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 4fr);
+}
+
+.comparison-card:nth-child(2) .comparison-images {
+  grid-template-columns: minmax(0, 4fr) minmax(0, 3fr);
 }
 
 .comparison-images figure {
@@ -236,13 +251,8 @@
 
 .comparison-images img {
   width: 100%;
-  height: clamp(390px, 43vw, 520px);
+  height: auto;
   object-fit: contain;
-  background: #e9e5dd;
-}
-
-.comparison-card:nth-child(2) .comparison-images img {
-  height: clamp(390px, 37vw, 460px);
 }
 
 .comparison-zoom {
@@ -673,16 +683,9 @@
     margin-top: 26px;
   }
 
-  .comparison-images {
+  .comparison-card:first-child .comparison-images,
+  .comparison-card:nth-child(2) .comparison-images {
     grid-template-columns: 1fr;
-  }
-
-  .comparison-images img {
-    height: clamp(360px, 95vw, 560px);
-  }
-
-  .comparison-card:nth-child(2) .comparison-images img {
-    height: clamp(250px, 66vw, 420px);
   }
 
   .guidance-card,

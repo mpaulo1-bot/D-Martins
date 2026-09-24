@@ -54,6 +54,10 @@ Quando a página for exibida em desktop, o hero deve separar texto e fotografia 
 
 Quando a seção de resultados for exibida em desktop, cada obra deve ocupar uma linha própria e suas fotos Antes e Depois devem aparecer lado a lado, em quadros maiores que os anteriores. Quando a largura for de até 760 px, as fotos Antes e Depois de cada obra devem aparecer em uma única coluna, sem corte ou deslocamento horizontal. Quando o visitante clicar ou acionar pelo teclado qualquer foto da comparação, a página deve abrir a imagem correspondente em uma janela sobreposta com legenda formada pelo nome da obra e pelo rótulo Antes ou Depois; em uma tela de 390 px, a imagem aberta deve medir pelo menos 160 px de largura e 180 px de altura. O botão de fechar e a tecla Escape devem fechar a ampliação e devolver o foco ao controle acionado.
 
+### RCF-009 — Ajuste das fotos aos quadros
+
+Quando as quatro fotos de comparação forem exibidas em larguras de 1440, 760 e 390 px, cada foto deve manter sua proporção natural sem corte, e seu quadro clicável deve acompanhar sua altura, sem faixas vazias acima, abaixo ou nas laterais da imagem. A diferença entre as dimensões visíveis do quadro e da foto deve ser de no máximo 3 px por eixo, considerando a borda. Em 1440 px, as duas fotos de cada par devem terminar com diferença de altura de no máximo 15 px, sem esticar ou cortar nenhuma delas.
+
 ## Out of Scope
 
 - Não afirmar que banheiro possui comparação antes/depois.
@@ -72,3 +76,4 @@ Quando a seção de resultados for exibida em desktop, cada obra deve ocupar uma
 | RCF-006 | Material, hiring and quality guidance sections | SEO validator and content inspection |
 | RCF-007 | `reforma-de-casas/index.html` and `src/reforma-de-casas.css` | Desktop/mobile visual review and SEO gate |
 | RCF-008 | Comparison markup, gallery script and CSS | Browser geometry and interaction tests |
+| RCF-009 | `src/reforma-de-casas.css` image sizing | Browser image/frame geometry tests |
