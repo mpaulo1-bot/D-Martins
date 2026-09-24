@@ -339,6 +339,32 @@ assert(
     (campaignHtml.match(/<figcaption>Depois<\/figcaption>/g) ?? []).length === 2,
   "Comparações da landing devem ter dois rótulos Antes e dois Depois.",
 );
+for (const sectionId of ["materiais", "contratar"]) {
+  assert(
+    campaignHtml.includes(`id="${sectionId}"`),
+    `Seção editorial ausente na landing: #${sectionId}.`,
+  );
+}
+assert(
+  campaignHtml.includes("Escolha de materiais") &&
+    campaignHtml.includes("custo e ciclo de vida") &&
+    campaignHtml.includes("Priorize o uso do ambiente"),
+  "Orientações de escolha de materiais ausentes ou incompletas.",
+);
+assert(
+  campaignHtml.includes("Escopo detalhado") &&
+    campaignHtml.includes("Responsabilidade técnica") &&
+    campaignHtml.includes("Cronograma e etapas") &&
+    campaignHtml.includes("Comunicação acessível"),
+  "Checklist para contratação ausente ou incompleto.",
+);
+assert(
+  campaignHtml.includes("Wellington Carlos Corrêa") &&
+    campaignHtml.includes("CREA-ES 50219/D") &&
+    campaignHtml.includes("Mais de 15 anos") &&
+    campaignHtml.includes("Atendimento regional"),
+  "Qualidades verificáveis da D'Martins ausentes.",
+);
 for (const tag of campaignHtml.match(/<img\b[^>]*>/gi) ?? []) {
   assert(/\balt=["'][^"']+["']/i.test(tag), "Imagem da landing sem alt.");
   assert(/\bwidth=["']\d+["']/i.test(tag), "Imagem da landing sem width.");

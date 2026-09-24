@@ -41,6 +41,10 @@ Quando imagens forem exibidas, cada elemento `img` deve possuir `alt`, `width` e
 
 Quando o sitemap for publicado, ele deve conter a URL canônica da landing page e as quatro imagens da galeria, sem parâmetros de rastreamento.
 
+### RCF-006 — Conteúdo de decisão
+
+Quando o visitante avaliar a contratação de uma reforma, a página deve explicar critérios de escolha de materiais, cuidados para comparar empresas e pelo menos três qualidades verificáveis da D'Martins.
+
 ## Out of Scope
 
 - Não afirmar que banheiro possui comparação antes/depois.
@@ -56,3 +60,4 @@ Quando o sitemap for publicado, ele deve conter a URL canônica da landing page 
 | RCF-003 | Comparison cards in landing page | SEO validator and asset existence |
 | RCF-004 | `img` attributes and loading hints | SEO validator |
 | RCF-005 | `sitemap.xml` URL and image entries | SEO validator |
+| RCF-006 | Material, hiring and quality guidance sections | SEO validator and content inspection |
