@@ -106,3 +106,35 @@ Os limites numéricos das asserções correspondem ao spec. A tolerância de 0,0
 - **Incidente de limpeza:** o vínculo `node_modules` criado para o worktree isolado também removeu o diretório gerado `node_modules` da árvore real ao remover o worktree. Reinstalei as dependências com `npm ci` (exit 0, `playwright-core` restaurado) e executei `npm test` na árvore real (exit 0, SEO e layout aprovados). Não houve alteração em arquivos rastreados nem nos dois diretórios não rastreados preexistentes. Nenhuma outra remoção foi feita.
 
 **Estado desta verificação:** PASS — RCF-009 no diff `9eb3f43..f58a24c`. Nenhuma tarefa de correção.
+
+---
+
+# RCF-009 — verificação independente dos quadros iguais
+
+**Data:** 2026-09-24
+**Spec:** `.specs/features/reforma-de-casas-landing/spec.md:57-59`
+**Diff verificado:** `c78bb33..af4a036`
+**Verificador:** subagente independente (autor ≠ verificador)
+**Resultado:** PASS.
+
+| Critério e resultado definido pelo spec | Evidência `arquivo:linha` e asserção | Resultado |
+| --- | --- | --- |
+| A 1440, 760 e 390 px, os quadros Antes/Depois de cada obra diferem no máximo 2 px em largura e altura | `scripts/validate-layout.mjs:98-99,126-134` percorre as três larguras, exige quatro quadros e compara `Math.abs(before.frameWidth - after.frameWidth) <= 2` e `Math.abs(before.frameHeight - after.frameHeight) <= 2` para cozinha e fachada. `src/reforma-de-casas.css:214-219,226-231` fornece colunas iguais e largura integral. | PASS |
+| Cozinha 3:4; fachada 4:3, tolerância 0,02 | `scripts/validate-layout.mjs:129-133` seleciona `3 / 4` ou `4 / 3` por obra e compara a razão de cada quadro com tolerância `<= 0.02`; `src/reforma-de-casas.css:230,240-242` aplica essas razões. | PASS |
+| Quatro fotos inteiras, sem corte | `scripts/validate-layout.mjs:23-30,73-75,123-125` decodifica os quatro arquivos em cada largura e exige imagem carregada com `objectFit === "contain"`; `src/reforma-de-casas.css:261-268` preenche o elemento com `object-fit: contain`. | PASS |
+| Área não preenchida mostra a própria foto desfocada | `reforma-de-casas/index.html:149-150,156-157` associa cada `--comparison-photo` ao respectivo `img src`; `src/reforma-de-casas.css:244-253` desenha a imagem no pseudo-elemento com `background-size: cover` e `filter: blur(18px) brightness(0.78)`; `scripts/validate-layout.mjs:76-86,135-139` exige nome de arquivo correspondente, filtro `blur(` e elemento da foto cobrindo o quadro com diferença `<= 3` px por eixo. | PASS |
+| Até 760 px, os pares empilham sem deslocamento horizontal | `scripts/validate-layout.mjs:108-120` verifica ordem vertical e `scrollWidth <= clientWidth + 1` em 760 e 390 px; `src/reforma-de-casas.css:699-701` define uma coluna para `.comparison-images`. | PASS |
+
+Os resultados esperados e limites dos testes correspondem ao texto de RCF-009. O teste do fundo verifica o CSS computado e o arquivo associado; a inspeção do CSS confirma que o pseudo-elemento tem conteúdo, posição e camada visível atrás da foto. Não houve UAT visual humana nesta rodada. Não existe `tasks.md` para esta feature; o gate do projeto é `npm run build`.
+
+## Gate e sensor
+
+- `npm run build` na árvore real: PASS (exit 0). Sitemap gerado com 2 URLs; validadores SEO e layout aprovados; nenhuma falha ou teste pulado. Os scripts não publicam contagem individual de casos.
+- Duas mutações de comportamento executadas separadamente em worktree descartável sobre `af4a036`, com instalação própria via `npm ci` e sem vínculo ao `node_modules` real:
+
+| Mutação isolada | Teste e resultado |
+| --- | --- |
+| `src/reforma-de-casas.css:230`, cozinha `aspect-ratio: 3 / 4` → `1 / 1` | `node scripts/validate-layout.mjs`: exit 1 em `scripts/validate-layout.mjs:126`, quadros com razão incorreta a 1440 px. Morta. |
+| Após restaurar a razão, `src/reforma-de-casas.css:267`, `object-fit: contain` → `cover` | `node scripts/validate-layout.mjs`: exit 1 em `scripts/validate-layout.mjs:124`, foto potencialmente cortada. Morta. |
+
+**Sensor:** 2/2 mutações mortas; 0 sobreviventes. O worktree foi removido. O `git status --porcelain=v1` da árvore real antes do sensor continha apenas os preexistentes `?? .specs/STATE.md` e `?? .tmp-photo-study/`; a única alteração rastreada desta verificação é este relatório. Nenhuma correção de código é necessária.
