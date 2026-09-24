@@ -560,6 +560,7 @@
   .campaign-hero-layout,
   .comparison-grid,
   .guidance-grid,
+  .hiring-checklist,
   .quality-grid,
   .process-list {
     grid-template-columns: 1fr;

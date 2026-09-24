@@ -2,9 +2,12 @@
   "name": "dmartins-construcoes-site",
   "private": true,
   "scripts": {
-    "build": "node scripts/generate-sitemap.mjs && node scripts/validate-seo.mjs",
+    "build": "node scripts/generate-sitemap.mjs && npm test",
     "preview": "node scripts/serve-static.mjs",
-    "test": "node scripts/validate-seo.mjs",
+    "test": "node scripts/validate-seo.mjs && node scripts/validate-layout.mjs",
     "check:seo": "node scripts/validate-seo.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0"
   }
 }

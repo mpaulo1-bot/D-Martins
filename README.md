@@ -21,6 +21,9 @@ npm test
 npm run build
 ```
 
+Os testes de layout usam Google Chrome ou Microsoft Edge instalado para conferir
+a página de reformas em desktop e celular.
+
 O build não compila a página, pois o site é HTML estático. Ele regenera o
 `sitemap.xml` a partir das páginas HTML canônicas e executa as verificações de
 SEO técnico.
