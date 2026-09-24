@@ -173,25 +173,25 @@
 
 .comparison-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
-  margin-top: 36px;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-top: 42px;
 }
 
 .comparison-card {
   min-width: 0;
-  padding: 22px;
-  background: #fff;
+  padding: clamp(20px, 3vw, 36px);
+  background: #fbfaf7;
   border: 1px solid var(--line);
   border-radius: 10px;
-  box-shadow: 0 16px 36px rgba(38, 56, 70, 0.07);
+  box-shadow: 0 18px 42px rgba(38, 56, 70, 0.08);
 }
 
 .comparison-heading {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 }
 
 .comparison-heading span,
@@ -202,13 +202,13 @@
 }
 
 .comparison-heading h3 {
-  font-size: 1.35rem;
+  font-size: clamp(1.45rem, 2vw, 1.9rem);
 }
 
 .comparison-images {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: clamp(16px, 2.5vw, 30px);
 }
 
 .comparison-images figure {
@@ -216,21 +216,120 @@
   margin: 0;
 }
 
+.comparison-images button {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: #e9e5dd;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: zoom-in;
+}
+
+.comparison-images button:hover,
+.comparison-images button:focus-visible {
+  border-color: var(--brand-dark);
+  box-shadow: 0 0 0 3px rgba(183, 141, 64, 0.18);
+}
+
 .comparison-images img {
   width: 100%;
-  height: 240px;
+  height: clamp(390px, 43vw, 520px);
   object-fit: contain;
-  background: var(--cream);
-  border-radius: 5px;
+  background: #e9e5dd;
+}
+
+.comparison-card:nth-child(2) .comparison-images img {
+  height: clamp(390px, 37vw, 460px);
+}
+
+.comparison-zoom {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  padding: 9px 12px;
+  color: #fff;
+  background: rgba(28, 42, 48, 0.88);
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .comparison-images figcaption {
-  margin-top: 10px;
-  color: var(--muted);
-  font-size: 0.75rem;
+  margin-top: 12px;
+  color: var(--brand-dark);
+  font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+.comparison-lightbox {
+  position: fixed;
+  inset: 0;
+  width: min(1100px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  padding: 42px 18px 18px;
+  overflow: visible;
+  color: #fff;
+  background: #1c2a30;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+}
+
+.comparison-lightbox::backdrop {
+  background: rgba(10, 18, 22, 0.84);
+}
+
+.comparison-lightbox figure {
+  margin: 0;
+}
+
+.lightbox-media {
+  display: grid;
+  place-items: center;
+}
+
+.lightbox-media img {
+  width: auto;
+  max-width: 100%;
+  max-height: calc(100dvh - 130px);
+  object-fit: contain;
+}
+
+.comparison-lightbox figcaption {
+  margin-top: 12px;
+  color: #fff;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  place-items: center;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.13);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus-visible {
+  background: var(--brand-dark);
 }
 
 .material-section {
@@ -574,8 +673,16 @@
     margin-top: 26px;
   }
 
+  .comparison-images {
+    grid-template-columns: 1fr;
+  }
+
   .comparison-images img {
-    height: 180px;
+    height: clamp(360px, 95vw, 560px);
+  }
+
+  .comparison-card:nth-child(2) .comparison-images img {
+    height: clamp(250px, 66vw, 420px);
   }
 
   .guidance-card,
@@ -610,10 +717,6 @@
 
   .comparison-card {
     padding: 18px;
-  }
-
-  .comparison-images img {
-    height: 150px;
   }
 
   .hiring-grid > div:first-child {

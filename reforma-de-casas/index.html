@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="../src/styles.css" />
     <link rel="stylesheet" href="../src/reforma-de-casas.css" />
     <script defer src="../src/main.js"></script>
+    <script defer src="../src/reforma-gallery.js"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -145,19 +146,24 @@
           <article class="comparison-card">
             <div class="comparison-heading"><span>01</span><h3>Reforma de cozinha</h3></div>
             <div class="comparison-images">
-              <figure><img src="../assets/reforma-de-casas/reforma-casa-cozinha-antes.webp" alt="Cozinha antes da reforma, com ambiente em demolição" width="1836" height="3264" loading="lazy" /><figcaption>Antes</figcaption></figure>
-              <figure><img src="../assets/reforma-de-casas/reforma-casa-cozinha-depois.webp" alt="Cozinha depois da reforma, com bancada e armários planejados" width="3000" height="4000" loading="lazy" /><figcaption>Depois</figcaption></figure>
+              <figure><button type="button" aria-label="Ampliar foto da cozinha antes da reforma"><img src="../assets/reforma-de-casas/reforma-casa-cozinha-antes.webp" alt="Cozinha antes da reforma, com ambiente em demolição" width="1836" height="3264" loading="lazy" /><span class="comparison-zoom" aria-hidden="true">Ampliar foto ↗</span></button><figcaption>Antes</figcaption></figure>
+              <figure><button type="button" aria-label="Ampliar foto da cozinha depois da reforma"><img src="../assets/reforma-de-casas/reforma-casa-cozinha-depois.webp" alt="Cozinha depois da reforma, com bancada e armários planejados" width="3000" height="4000" loading="lazy" /><span class="comparison-zoom" aria-hidden="true">Ampliar foto ↗</span></button><figcaption>Depois</figcaption></figure>
             </div>
           </article>
           <article class="comparison-card">
             <div class="comparison-heading"><span>02</span><h3>Reforma de fachada</h3></div>
             <div class="comparison-images">
-              <figure><img src="../assets/reforma-de-casas/reforma-casa-fachada-antes.webp" alt="Fachada durante a obra de reforma residencial" width="4000" height="3000" loading="lazy" /><figcaption>Antes</figcaption></figure>
-              <figure><img src="../assets/reforma-de-casas/reforma-casa-fachada-depois.webp" alt="Fachada depois da reforma residencial, com acabamento concluído" width="4000" height="3000" loading="lazy" /><figcaption>Depois</figcaption></figure>
+              <figure><button type="button" aria-label="Ampliar foto da fachada antes da reforma"><img src="../assets/reforma-de-casas/reforma-casa-fachada-antes.webp" alt="Fachada durante a obra de reforma residencial" width="4000" height="3000" loading="lazy" /><span class="comparison-zoom" aria-hidden="true">Ampliar foto ↗</span></button><figcaption>Antes</figcaption></figure>
+              <figure><button type="button" aria-label="Ampliar foto da fachada depois da reforma"><img src="../assets/reforma-de-casas/reforma-casa-fachada-depois.webp" alt="Fachada depois da reforma residencial, com acabamento concluído" width="4000" height="3000" loading="lazy" /><span class="comparison-zoom" aria-hidden="true">Ampliar foto ↗</span></button><figcaption>Depois</figcaption></figure>
             </div>
           </article>
         </div>
       </section>
+
+      <dialog class="comparison-lightbox" aria-label="Foto ampliada da reforma">
+        <button class="lightbox-close" type="button" aria-label="Fechar foto ampliada">×</button>
+        <figure><div class="lightbox-media"></div><figcaption></figcaption></figure>
+      </dialog>
 
       <section id="materiais" class="campaign-section material-section">
         <div class="container section-head">

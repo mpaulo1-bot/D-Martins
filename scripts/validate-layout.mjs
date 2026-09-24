@@ -64,6 +64,12 @@ async function inspect(width) {
         comparisonCards: [...document.querySelectorAll(".comparison-card")].map((card) =>
           card.getBoundingClientRect().toJSON(),
         ),
+        comparisonPairs: [...document.querySelectorAll(".comparison-card")].map((card) =>
+          [...card.querySelectorAll(".comparison-images figure")].map((figure) =>
+            figure.getBoundingClientRect().toJSON(),
+          ),
+        ),
+        comparisonPhotoHeight: document.querySelector(".comparison-images img").getBoundingClientRect().height,
         comparisonPhotosIntact: [...document.querySelectorAll(".comparison-images img")].every((img) =>
           img.complete && img.naturalWidth > 0 && getComputedStyle(img).objectFit === "contain",
         ),
@@ -80,6 +86,12 @@ try {
   const mobileLayouts = [await inspect(760), await inspect(390)];
   assert(desktop.heroText.right + 16 <= desktop.heroImage.left,
     "No desktop, texto e foto do hero devem ocupar colunas separadas.");
+  assert(desktop.comparisonCards[1].top >= desktop.comparisonCards[0].bottom - 2,
+    "Cada obra deve ocupar uma linha propria no desktop.");
+  assert(desktop.comparisonPairs.every(([before, after]) => before.right + 8 <= after.left),
+    "Antes e Depois devem aparecer lado a lado no desktop.");
+  assert(desktop.comparisonPhotoHeight >= 360,
+    "Os quadros das fotos devem oferecer destaque visual no desktop.");
 
   for (const [index, mobile] of mobileLayouts.entries()) {
     const width = [760, 390][index];
@@ -87,6 +99,8 @@ try {
       `Em ${width}px, a foto do hero deve aparecer abaixo do texto.`);
     assert(mobile.comparisonCards[1].top >= mobile.comparisonCards[0].bottom - 2,
       `Em ${width}px, os cards de comparação devem empilhar.`);
+    assert(mobile.comparisonPairs.every(([before, after]) => after.top >= before.bottom - 2),
+      `Em ${width}px, Antes e Depois devem aparecer em uma unica coluna.`);
     assert(mobile.contentWidth <= mobile.viewportWidth + 1,
       `Em ${width}px, a página não deve ter deslocamento horizontal.`);
     assert(mobile.sections.every(({ first, second }) => second.top >= first.bottom - 2),
@@ -101,7 +115,43 @@ try {
     "As seções editoriais devem ter títulos destacados e cartões legíveis.");
   }
 
-  console.log("Layout aprovado: desktop em duas colunas; cartões e fotos responsivos.");
+  const interactionContext = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  try {
+    const page = await interactionContext.newPage();
+    await page.goto(pageUrl, { waitUntil: "load" });
+    const triggers = page.locator(".comparison-images button");
+    assert.equal(await triggers.count(), 4, "Cada foto deve ser acionavel.");
+    const dialog = page.locator(".comparison-lightbox");
+    for (const index of [0, 1, 2, 3]) {
+      const trigger = triggers.nth(index);
+      if (index === 0) {
+        await trigger.focus();
+        await page.keyboard.press("Enter");
+      } else {
+        await trigger.click();
+      }
+      assert.equal(await dialog.evaluate((element) => element.open), true,
+        "A foto deve abrir ampliada pelo teclado.");
+      assert.equal(await dialog.locator("img").getAttribute("src"),
+        await trigger.locator("img").getAttribute("src"),
+        "A ampliacao deve exibir a foto acionada.");
+      assert((await dialog.locator("figcaption").innerText()).trim().length > 0,
+        "A ampliacao deve identificar a foto.");
+      if (index === 0) {
+        await page.keyboard.press("Escape");
+      } else {
+        await dialog.locator(".lightbox-close").click();
+      }
+      assert.equal(await dialog.evaluate((element) => element.open), false,
+        "Escape ou fechar deve encerrar a ampliacao.");
+      assert.equal(await trigger.evaluate((element) => element === document.activeElement), true,
+        "O foco deve voltar para a foto acionada.");
+    }
+  } finally {
+    await interactionContext.close();
+  }
+
+  console.log("Layout aprovado: comparacoes destacadas, ampliacao acessivel e fotos responsivas.");
 } finally {
   await browser.close();
 }

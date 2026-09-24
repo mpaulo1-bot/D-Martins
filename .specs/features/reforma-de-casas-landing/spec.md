@@ -50,6 +50,10 @@ Quando o visitante avaliar a contratação de uma reforma, a página deve explic
 
 Quando a página for exibida em desktop, o hero deve separar texto e fotografia em duas colunas e as seções de materiais, contratação, qualidades e processo devem apresentar títulos e cartões com hierarquia visual consistente. Quando a largura for de até 760 px, hero e cartões devem empilhar sem deslocamento horizontal. As quatro fotos da comparação devem permanecer inteiras nos quadros.
 
+### RCF-008 — Comparação ampliável
+
+Quando a seção de resultados for exibida em desktop, cada obra deve ocupar uma linha própria e suas fotos Antes e Depois devem aparecer lado a lado, em quadros maiores que os anteriores. Quando a largura for de até 760 px, as fotos Antes e Depois de cada obra devem aparecer em uma única coluna, sem corte ou deslocamento horizontal. Quando o visitante clicar ou acionar pelo teclado qualquer foto da comparação, a página deve abrir a imagem correspondente ampliada com sua identificação; o botão de fechar e a tecla Escape devem fechar a ampliação e devolver o foco ao controle acionado.
+
 ## Out of Scope
 
 - Não afirmar que banheiro possui comparação antes/depois.
@@ -67,3 +71,4 @@ Quando a página for exibida em desktop, o hero deve separar texto e fotografia 
 | RCF-005 | `sitemap.xml` URL and image entries | SEO validator |
 | RCF-006 | Material, hiring and quality guidance sections | SEO validator and content inspection |
 | RCF-007 | `reforma-de-casas/index.html` and `src/reforma-de-casas.css` | Desktop/mobile visual review and SEO gate |
+| RCF-008 | Comparison markup, gallery script and CSS | Browser geometry and interaction tests |
