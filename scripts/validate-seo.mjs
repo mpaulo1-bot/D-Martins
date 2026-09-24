@@ -322,12 +322,19 @@ assert(
 const campaignImages = [
   "../assets/reforma-de-casas/reforma-casa-cozinha-antes.webp",
   "../assets/reforma-de-casas/reforma-casa-cozinha-depois.webp",
-  "../assets/reforma-de-casas/reforma-casa-fachada-antes.webp",
+  "../assets/reforma-de-casas/reforma-casa-fachada-antes1.webp",
   "../assets/reforma-de-casas/reforma-casa-fachada-depois.webp",
 ];
 for (const image of campaignImages) {
   assert(campaignHtml.includes(`src="${image}"`), `Imagem da landing ausente: ${image}.`);
 }
+assert(
+  !campaignHtml.includes('reforma-casa-fachada-antes.webp"') &&
+    !sitemap.includes('reforma-casa-fachada-antes.webp</image:loc>') &&
+    campaignHtml.includes('"contentUrl": "https://construtoradmartins.com.br/assets/reforma-de-casas/reforma-casa-fachada-antes1.webp"') &&
+    /src="\.\.\/assets\/reforma-de-casas\/reforma-casa-fachada-antes1\.webp"[^>]*width="6000" height="3416"/.test(campaignHtml),
+  "A foto antiga da fachada não deve ser exibida ou indexada; a nova deve ter dimensões corretas.",
+);
 assert(
   (campaignHtml.match(/class="comparison-card"/g) ?? []).length === 2 &&
     campaignHtml.includes("<h3>Reforma de cozinha</h3>") &&

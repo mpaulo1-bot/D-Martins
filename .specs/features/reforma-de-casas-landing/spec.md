@@ -32,7 +32,7 @@ Quando o visitante visualizar a página, ela deve oferecer chamadas para orçame
 
 ### RCF-003 — Prova visual
 
-Quando a galeria for exibida, ela deve apresentar exatamente duas comparações identificadas como cozinha e fachada, cada uma com uma imagem “Antes” e uma imagem “Depois”, usando os quatro WebPs em `assets/reforma-de-casas/`.
+Quando a galeria for exibida, ela deve apresentar exatamente duas comparações identificadas como cozinha e fachada, cada uma com uma imagem “Antes” e uma imagem “Depois”, usando quatro WebPs em `assets/reforma-de-casas/`. A imagem “Antes” da fachada deve ser `reforma-casa-fachada-antes1.webp` (6000 × 3416 px) na página, nos dados estruturados e no sitemap.
 
 ### RCF-004 — Acessibilidade e desempenho
 
