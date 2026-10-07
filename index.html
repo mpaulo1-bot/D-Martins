@@ -64,7 +64,7 @@
             "@id": "https://construtoradmartins.com.br/#webpage",
             "url": "https://construtoradmartins.com.br/",
             "name": "Construtora D'Martins | Construção, Reformas e Engenharia na Grande Vitória",
-            "description": "Construção, reformas comerciais e industriais, laudos técnicos, engenharia e obras públicas na Grande Vitória. Responsabilidade técnica por Eng. Wellington Carlos Corrêa.",
+            "description": "Construção, reformas, projetos, regularização de imóveis, inspeção predial e obras públicas na Grande Vitória. Atendimento com engenheiro civil.",
             "inLanguage": "pt-BR",
             "isPartOf": {
               "@id": "https://construtoradmartins.com.br/#website"
@@ -84,13 +84,13 @@
             }
           },
           {
-            "@type": "ConstructionBusiness",
+            "@type": "HomeAndConstructionBusiness",
             "@id": "https://construtoradmartins.com.br/#empresa",
             "name": "D'Martins Construções",
             "legalName": "D' Martins Construcoes LTDA",
             "taxID": "58.826.275/0001-69",
             "url": "https://construtoradmartins.com.br/",
-            "logo": "https://construtoradmartins.com.br",
+            "logo": "https://construtoradmartins.com.br/favicon.svg",
             "description": "Empresa especializada em engenharia civil, reformas e construções residenciais, comerciais, industriais e atendimento a órgãos públicos na Grande Vitória.",
             "telephone": "+5527988624528",
             "address": {
@@ -145,15 +145,29 @@
                 "itemOffered": {
                   "@type": "Service",
                   "name": "Reformas residenciais, comerciais e prediais",
-                  "description": "Reformas de casas, apartamentos, banheiros, cozinhas, telhados e edifícios comerciais com foco corporativo."
+                  "description": "Reformas de casas, apartamentos, banheiros, cozinhas, telhados e edifícios comerciais com foco corporativo.",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  },
+                  "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "Grande Vitória"
+                  }
                 }
               },
               {
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Construções Industriais e Residenciais",
-                  "description": "Execução completa de obras, fundações, estruturas metálicas, galpões e muros de arrimo."
+                  "name": "Construções",
+                  "description": "Execução completa de obras, fundações, estruturas metálicas, galpões e muros de arrimo.",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  },
+                  "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "Grande Vitória"
+                  }
                 }
               },
               {
@@ -161,7 +175,14 @@
                 "itemOffered": {
                   "@type": "Service",
                   "name": "Projetos de arquitetura e complementares",
-                  "description": "Planejamento técnico, projetos estruturais e elétricos para evitar retrabalhos na execução."
+                  "description": "Planejamento técnico, projetos estruturais e elétricos para evitar retrabalhos na execução.",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  },
+                  "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "Grande Vitória"
+                  }
                 }
               },
               {
@@ -169,7 +190,14 @@
                 "itemOffered": {
                   "@type": "Service",
                   "name": "Regularização de obras e imóveis",
-                  "description": "Consultoria em engenharia para adequação documental junto aos órgãos municipais."
+                  "description": "Consultoria em engenharia para adequação documental junto aos órgãos municipais.",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  },
+                  "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "Grande Vitória"
+                  }
                 }
               },
               {
@@ -177,15 +205,29 @@
                 "itemOffered": {
                   "@type": "Service",
                   "name": "Inspeção predial, vistorias e laudos técnicos",
-                  "description": "Emissão de laudos de engenharia, vistorias de vizinhança e acompanhamento de patologias estruturais."
+                  "description": "Emissão de laudos de engenharia, vistorias de vizinhança e acompanhamento de patologias estruturais.",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  },
+                  "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "Grande Vitória"
+                  }
                 }
               },
               {
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Obras públicas e licitações",
-                  "description": "Atendimento técnico especializado e engenharia civil focada em contratos públicos governamentais."
+                  "name": "Obras públicas",
+                  "description": "Atendimento técnico especializado e engenharia civil focada em contratos públicos governamentais.",
+                  "provider": {
+                    "@id": "https://construtoradmartins.com.br/#empresa"
+                  },
+                  "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "Grande Vitória"
+                  }
                 }
               }
             ],
@@ -197,7 +239,7 @@
               },
               {
                 "@type": "ImageObject",
-                "contentUrl": "https://construtoradmartins.com.br",
+                "contentUrl": "https://construtoradmartins.com.br/assets/obras/fundacao-residencial.webp",
                 "caption": "Execução de fundação residencial"
               },
               {
@@ -219,6 +261,36 @@
                 "@type": "ImageObject",
                 "contentUrl": "https://construtoradmartins.com.br/assets/obras/calcada-intertravada.webp",
                 "caption": "Execução de calçada com blocos intertravados"
+              },
+              {
+                "@type": "ImageObject",
+                "contentUrl": "https://construtoradmartins.com.br/assets/obras/muro-pedras.webp",
+                "caption": "Revestimento de muro com pedras naturais"
+              },
+              {
+                "@type": "ImageObject",
+                "contentUrl": "https://construtoradmartins.com.br/assets/obras/inspecao-predial-medicao-armadura.webp",
+                "caption": "Medição de armadura em inspeção predial"
+              },
+              {
+                "@type": "ImageObject",
+                "contentUrl": "https://construtoradmartins.com.br/assets/obras/obra-fundacao.webp",
+                "caption": "Execução de estrutura em concreto armado"
+              },
+              {
+                "@type": "ImageObject",
+                "contentUrl": "https://construtoradmartins.com.br/assets/obras/reforma-residencial-ampliacao.webp",
+                "caption": "Reforma e ampliação residencial"
+              },
+              {
+                "@type": "ImageObject",
+                "contentUrl": "https://construtoradmartins.com.br/assets/obras/impermeabilizacao-laje.webp",
+                "caption": "Impermeabilização com manta asfáltica"
+              },
+              {
+                "@type": "ImageObject",
+                "contentUrl": "https://construtoradmartins.com.br/assets/obras/inspecao-predial-armadura-exposta.webp",
+                "caption": "Inspeção de armaduras expostas em fachada"
               }
             ]
           },
@@ -226,7 +298,7 @@
             "@type": "Person",
             "@id": "https://construtoradmartins.com.br/#wellington-carlos-correa",
             "name": "Wellington Carlos Corrêa",
-            "jobTitle": "Engenheiro Civil",
+            "jobTitle": "Engenheiro civil",
             "description": "Engenheiro civil responsável técnico com ampla experiência em obras públicas e marcas privadas nacionais.",
             "worksFor": {
               "@id": "https://construtoradmartins.com.br/#empresa"

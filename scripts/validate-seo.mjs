@@ -136,6 +136,15 @@ for (const id of [
 
 const business = graph.find((entity) => entity["@id"] === `${productionUrl}#empresa`);
 assert(business, "Entidade da empresa ausente.");
+assert(
+  business["@type"] === "HomeAndConstructionBusiness",
+  "Tipo da empresa deve ser HomeAndConstructionBusiness.",
+);
+assert(
+  business.logo === `${productionUrl}favicon.svg` &&
+    existsSync(path.join(root, "favicon.svg")),
+  "Logo da empresa deve apontar para o arquivo da marca.",
+);
 assert(business.address?.["@type"] === "PostalAddress", "PostalAddress ausente.");
 const offerNames = business.makesOffer?.map((offer) => offer.itemOffered?.name);
 assert(
